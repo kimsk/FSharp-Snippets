@@ -53,8 +53,16 @@ let rfLabels = readBenchmarkFile rfFile
 
 
 #time
-runClassifier trainingRecords testImages.[..100]
-|> Array.mapi (fun i l -> (l, knnLabels.[i], rfLabels.[i]))
+let result = runClassifier trainingRecords testImages
+                |> Array.mapi (fun i l -> 
+                    (l, knnLabels.[i], rfLabels.[i], l=knnLabels.[i], l=rfLabels.[i], knnLabels.[i]=rfLabels.[i])
+                )
 #time
+
+let lines = result 
+                |> Array.map (fun (l, knn, rf, l_knn, l_rf, knn_rf) -> 
+                    sprintf "%d,%d,%d,%A,%A,%A" l knn rf l_knn l_rf knn_rf)
+
+File.WriteAllLines(@"D:\kaggle\digit-recognizer\result.csv", lines)
 
 trainingRecords |> Array.length
