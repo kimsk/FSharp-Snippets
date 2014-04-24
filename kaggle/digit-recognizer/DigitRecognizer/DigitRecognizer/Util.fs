@@ -3,8 +3,14 @@
 open System
 open System.IO
 
-type Record = {Label:int; Pixels: float[]}
+module Files =
+    let trainingFile = @"D:\kaggle\digit-recognizer\train.csv"
+    let testFile = @"D:\kaggle\digit-recognizer\test.csv"
+    let knnFile = @"D:\kaggle\digit-recognizer\knn_benchmark.csv"
+    let rfFile = @"D:\kaggle\digit-recognizer\rf_benchmark.csv"
 
+
+type Record = {Label:int; Pixels: float[]}
 
 module FileReader =
     let readTrainingFile file =     

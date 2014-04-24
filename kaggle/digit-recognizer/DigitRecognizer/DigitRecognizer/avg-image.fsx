@@ -7,9 +7,7 @@ open System
 open System.IO
 open Util
 open Util.FileReader
-
-let trainingFile = @"D:\kaggle\digit-recognizer\train.csv"
-let testFile = @"D:\kaggle\digit-recognizer\test.csv"
+open Util.Files
 
 let trainingRecords = readTrainingFile trainingFile
 let testImages = readTestFile testFile

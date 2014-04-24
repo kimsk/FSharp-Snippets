@@ -4,11 +4,7 @@ open System
 open System.IO
 open Util
 open Util.FileReader
-
-let trainingFile = @"D:\kaggle\digit-recognizer\train.csv"
-let testFile = @"D:\kaggle\digit-recognizer\test.csv"
-let knnFile = @"D:\kaggle\digit-recognizer\knn_benchmark.csv"
-let rfFile = @"D:\kaggle\digit-recognizer\rf_benchmark.csv"
+open Util.Files
 
 #time
 let trainingRecords = readTrainingFile trainingFile
