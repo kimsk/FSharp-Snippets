@@ -156,4 +156,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 [Oo]utput/
-FsLab.sln.ide/
+*.sln.ide/
