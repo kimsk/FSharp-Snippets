@@ -53,8 +53,9 @@
   <ItemGroup>
     <Compile Include="Program.fs" />
     <None Include="App.config" />
-    <None Include="Script1.fsx" />
+    <None Include="Tennis.fsx" />
     <None Include="packages.config" />
+    <None Include="DigitRecognizer.fsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TennisData\TennisData.csproj">
