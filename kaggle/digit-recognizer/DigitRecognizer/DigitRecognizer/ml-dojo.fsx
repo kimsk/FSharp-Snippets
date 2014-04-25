@@ -1,13 +1,15 @@
-﻿#load "Util.fs"
+﻿#r @"..\packages\numl.0.7.6\lib\net40\numl.dll"
+#load "Util.fs"
 
 open System
 open System.IO
 open Util
 open Util.FileReader
 open Util.Files
+open Util.MachineLearningUtil
 
 #time
-let trainingRecords = readTrainingFile trainingFile
+let trainingRecords = readTrainingFile rowToRecord trainingFile
 let testImages = readTestFile testFile
 let knnLabels = readBenchmarkFile knnFile
 let rfLabels = readBenchmarkFile rfFile

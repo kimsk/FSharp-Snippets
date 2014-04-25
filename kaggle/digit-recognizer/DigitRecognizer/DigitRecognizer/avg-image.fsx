@@ -1,6 +1,6 @@
 ﻿// implement average image
 // http://www.kaggle.com/c/digit-recognizer/prospector#70
-
+#r @"..\packages\numl.0.7.6\lib\net40\numl.dll"
 #load "Util.fs"
 
 open System
@@ -8,8 +8,9 @@ open System.IO
 open Util
 open Util.FileReader
 open Util.Files
+open Util.MachineLearningUtil
 
-let trainingRecords = readTrainingFile trainingFile
+let trainingRecords = readTrainingFile rowToRecord trainingFile
 let testImages = readTestFile testFile
 
 let averagePixels (pixelsArr:float[][]) = 
