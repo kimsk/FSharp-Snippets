@@ -51,7 +51,7 @@
     <None Include="avg-image.fsx" />
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="numl.fsx" />
+    <None Include="naive-bayes.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
