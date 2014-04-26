@@ -1,48 +1,82 @@
 ﻿#I @"..\packages\FsLab.0.0.13-beta\"
 #load @"FsLab.fsx"
 
-// R Stuff
-//open RProvider
-//open RProvider.``base``
-//open RProvider.graphics
+
 open Deedle
 open System
 open System.IO
 
-type Record = 
+type Face =
     {
-        left_eye_center_x:decimal; left_eye_center_y:decimal; right_eye_center_x:decimal; right_eye_center_y:decimal; left_eye_inner_corner_x:decimal; left_eye_inner_corner_y:decimal; left_eye_outer_corner_x:decimal; left_eye_outer_corner_y:decimal; right_eye_inner_corner_x:decimal; right_eye_inner_corner_y:decimal; right_eye_outer_corner_x:decimal; right_eye_outer_corner_y:decimal; left_eyebrow_inner_end_x:decimal; left_eyebrow_inner_end_y:decimal; left_eyebrow_outer_end_x:decimal; left_eyebrow_outer_end_y:decimal; right_eyebrow_inner_end_x:decimal; right_eyebrow_inner_end_y:decimal; right_eyebrow_outer_end_x:decimal; right_eyebrow_outer_end_y:decimal; nose_tip_x:decimal; nose_tip_y:decimal; mouth_left_corner_x:decimal; mouth_left_corner_y:decimal; mouth_right_corner_x:decimal; mouth_right_corner_y:decimal; mouth_center_top_lip_x:decimal; mouth_center_top_lip_y:decimal; mouth_center_bottom_lip_x:decimal; mouth_center_bottom_lip_y:decimal; 
+        LeftEyeCenter:Option<decimal*decimal>
+        RightEyeCenter:Option<decimal*decimal>
+        LeftEyeInnerCorner:Option<decimal*decimal>
+        LeftEyeOuterCorner:Option<decimal*decimal>
+        RightEyeInnerCorner:Option<decimal*decimal>
+        RightEyeOuterCorner:Option<decimal*decimal>
+        LeftEyeBrowInnerEnd:Option<decimal*decimal>
+        LeftEyeBrowOuterEnd:Option<decimal*decimal>
+        RightEyeBrowInnerEnd:Option<decimal*decimal>
+        RighttEyeBrowOuterEnd:Option<decimal*decimal>
+        NoseTip:Option<decimal*decimal>
+        MouthLeftCorner:Option<decimal*decimal>
+        MouthRightCorner:Option<decimal*decimal>
+        MouthCenterTopLip:Option<decimal*decimal>
+        MouthCenterBottomLip:Option<decimal*decimal>
         Image:int[]
     }
 
-let records = 
-    let d = Decimal.Parse
-    File.ReadAllLines("D:/kaggle/facial-keypoints-detection/training.csv")
+let lines = File.ReadAllLines("D:/kaggle/facial-keypoints-detection/training.csv")
+
+let faces =      
+    let d = Decimal.TryParse
+    let toXy v1 v2 =         
+        match d v1 with
+        | false, _ -> None
+        | true, x ->
+            match d v2 with
+            | false, _ -> None
+            | true,y -> Some(x,y)        
+
+    lines
     |> Seq.skip 1
     |> Seq.map (fun (row:string) -> 
             let r = row.Split(',')
             {
-                left_eye_center_x=(d r.[0]); left_eye_center_y=(d r.[1]); 
-                right_eye_center_x=(d r.[2]); right_eye_center_y=(d r.[3]); 
-                left_eye_inner_corner_x=(d r.[4]); left_eye_inner_corner_y=(d r.[5]); 
-                left_eye_outer_corner_x=(d r.[6]); left_eye_outer_corner_y=(d r.[7]); 
-                right_eye_inner_corner_x=(d r.[8]); right_eye_inner_corner_y=(d r.[9]); 
-                right_eye_outer_corner_x=(d r.[10]); right_eye_outer_corner_y=(d r.[11]); 
-                left_eyebrow_inner_end_x=(d r.[12]); left_eyebrow_inner_end_y=(d r.[13]); 
-                left_eyebrow_outer_end_x=(d r.[14]); left_eyebrow_outer_end_y=(d r.[15]); 
-                right_eyebrow_inner_end_x=(d r.[16]); right_eyebrow_inner_end_y=(d r.[17]); 
-                right_eyebrow_outer_end_x=(d r.[18]); right_eyebrow_outer_end_y=(d r.[19]); 
-                nose_tip_x=(d r.[20]); nose_tip_y=(d r.[21]); 
-                mouth_left_corner_x=(d r.[22]); mouth_left_corner_y=(d r.[23]); mouth_right_corner_x=(d r.[24]); mouth_right_corner_y=(d r.[25]); 
-                mouth_center_top_lip_x=(d r.[26]); mouth_center_top_lip_y=(d r.[27]); mouth_center_bottom_lip_x=(d r.[28]); mouth_center_bottom_lip_y=(d r.[29]); 
-                Image = (r.[30].Split(' ') |> Array.map (Int32.Parse))
+               LeftEyeCenter = toXy r.[0] r.[1]
+               RightEyeCenter = toXy r.[2] r.[3]
+               LeftEyeInnerCorner = toXy r.[4] r.[5]
+               LeftEyeOuterCorner = toXy r.[6] r.[7]
+               RightEyeInnerCorner = toXy r.[8] r.[9]
+               RightEyeOuterCorner = toXy r.[10] r.[11]
+               LeftEyeBrowInnerEnd = toXy r.[12] r.[13]
+               LeftEyeBrowOuterEnd = toXy r.[14] r.[15]
+               RightEyeBrowInnerEnd = toXy r.[16] r.[17]
+               RighttEyeBrowOuterEnd = toXy r.[18] r.[19]
+               NoseTip = toXy r.[20] r.[21]
+               MouthLeftCorner = toXy r.[22] r.[23]
+               MouthRightCorner = toXy r.[24] r.[25]
+               MouthCenterTopLip = toXy r.[26] r.[27]
+               MouthCenterBottomLip = toXy r.[28] r.[29]
+               Image = (r.[30].Split(' ') |> Array.map (Int32.Parse))
             }
-        ) 
-    //|> Array.ofSeq
+        )
 
-records |> Seq.iteri (fun i r -> printfn "%d %A" i r)
-((File.ReadAllLines("D:/kaggle/facial-keypoints-detection/training.csv") 
-|> Seq.nth 209).Split(',')
+faces |> Seq.skip 210 |> Seq.iteri (fun i r -> printfn "%d %A" i r)
+((lines
+|> Seq.nth 211).Split(',')
 |> Seq.nth 30).Split(' ') |> Array.iteri (fun i r -> printfn "%d %d" i (Int32.Parse(r)))
 
+
+// R Stuff
+open RProvider
+open RProvider.``base``
+open RProvider.graphics
+open RProvider.grDevices
+
+let im = R.matrix(nrow=96,ncol=96,data=Array.rev((faces |> Seq.nth 0).Image))
+
+im.Engine.Evaluate("1 + 2")
+im.Engine.SetSymbol("im", im)
+im.Engine.Evaluate("image(1:96, 1:96, im, col=gray((0:255)/255))")
 
