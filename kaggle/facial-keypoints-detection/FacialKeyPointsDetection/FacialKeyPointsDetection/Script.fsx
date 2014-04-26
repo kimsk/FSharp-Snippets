@@ -74,9 +74,34 @@ open RProvider.``base``
 open RProvider.graphics
 open RProvider.grDevices
 
-let im = R.matrix(nrow=96,ncol=96,data=Array.rev((faces |> Seq.nth 0).Image))
+// help functions
+let o x = x :> obj
+let imXy p = match p with Some(x,y) -> (96m-x),(96m-y) | _ -> (0m,0m)     
+let face i = faces |> Seq.nth i
+let imPointParams (x,y) color = ["x",o x;"y",o y;"col",o color] |> namedParams
 
-im.Engine.Evaluate("1 + 2")
-im.Engine.SetSymbol("im", im)
-im.Engine.Evaluate("image(1:96, 1:96, im, col=gray((0:255)/255))")
+// get values from face 0
+let im = R.matrix(nrow=96,ncol=96,data=Array.rev((face 0).Image))
+let noseTipXy = imXy (face 0).NoseTip
+let leftEyeCenterXy = imXy (face 0).LeftEyeCenter
+let rightEyeCenterXy = imXy (face 0).RightEyeCenter
 
+// Visualize image using R
+// image(1:96, 1:96, im, col=gray((0:255)/255))
+let imageParams = 
+    [
+        "x",R.c([|1..96|])
+        "y",R.c([|1..96|])
+        "z",im
+        "col",R.gray(["level",R.c(seq { for i in 0. .. 255. -> i/255.})]|>namedParams)
+    ] |> namedParams
+R.image(imageParams)
+
+// add points for nose tip, left eye, right eye
+// points(96-d.train$nose_tip_x[1], 96-d.train$nose_tip_y[1], col="red")
+R.points(imPointParams noseTipXy "red")
+R.points(imPointParams leftEyeCenterXy "blue")
+R.points(imPointParams rightEyeCenterXy "green")
+
+// add all nose points
+seq { for f in faces -> f } |> Seq.iter (fun f -> R.points(imPointParams (imXy f.NoseTip) "red") |> ignore)
