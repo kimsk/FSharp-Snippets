@@ -15,6 +15,9 @@ let i = R.diag 4
 let data = [for i in 0. .. 0.1 .. 10. -> i * sin i ]
 R.plot data
 
+// REngine
+let c = i.Engine.Evaluate("c(1,2,3)")
+
 
 // Math.NET
 open MathNet.Numerics.LinearAlgebra
