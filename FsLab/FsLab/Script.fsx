@@ -18,6 +18,9 @@ R.plot data
 // REngine
 let c = i.Engine.Evaluate("c(1,2,3)")
 
+let arr = ["One",R.c([|1..10|]);"Two",R.c([|11..20|])]
+let df = R.data_frame(namedParams arr)
+
 
 // Math.NET
 open MathNet.Numerics.LinearAlgebra
