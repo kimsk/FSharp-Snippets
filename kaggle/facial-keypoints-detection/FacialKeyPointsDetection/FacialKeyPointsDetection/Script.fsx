@@ -74,13 +74,13 @@ open RProvider.``base``
 open RProvider.graphics
 open RProvider.grDevices
 
-// help functions
+// helper functions
 let o x = x :> obj
 let imXy p = match p with Some(x,y) -> (96m-x),(96m-y) | _ -> (0m,0m)     
 let face i = faces |> Seq.nth i
 let imPointParams (x,y) color = ["x",o x;"y",o y;"col",o color] |> namedParams
 
-// get values from face 0
+// get values from face
 let im = R.matrix(nrow=96,ncol=96,data=Array.rev((face 0).Image))
 let noseTipXy = imXy (face 0).NoseTip
 let leftEyeCenterXy = imXy (face 0).LeftEyeCenter
