@@ -74,6 +74,7 @@ open RProvider
 open RProvider.``base``
 open RProvider.graphics
 open RProvider.grDevices
+open RDotNet
 
 // helper functions
 let o x = x :> obj
@@ -122,7 +123,7 @@ let facesR_Df =
  
 R.colMeans(facesR_Df, na_rm=true)
 
-
+#time
 let facesDeedleDf =
     let d x =
         match Double.TryParse x with
@@ -134,12 +135,56 @@ let facesDeedleDf =
     |> Seq.nth 0 
     |> Seq.mapi (fun i h -> h, lines |> Seq.skip 1 |> Seq.map (fun r -> d r.[i]) |> Series.ofValues)
     |> Frame.ofColumns
+#time
 
+// deedle data frame can be used with R!
+let dv:float[] = R.colMeans(facesDeedleDf, na_rm=true).GetValue()
 facesDeedleDf?left_eye_center_x
 facesDeedleDf.Columns
 facesDeedleDf.Rows
 
-// deedle data frame can be used with R!
-let dv:float[] = R.colMeans(facesDeedleDf, na_rm=true).GetValue()
+
+// helper function to slice matrix
+let sliceMatrix (m:SymbolicExpression) (x1,x2,y1,y2) =
+    m.Engine.SetSymbol("m", m)
+    sprintf "m[%M:%M,%M:%M]" x1 x2 y1 y2 |> m.Engine.Evaluate
+
+
+let patchSize = 10m
+let patches = 
+    let leftEyeCenters = 
+        faces 
+        |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) 
+        |> Seq.map (fun f -> f.LeftEyeCenter.Value)
+
+    leftEyeCenters
+    |> Seq.mapi (fun i (x,y) -> 
+            let im = R.matrix(nrow=96,ncol=96,data=Array.rev((face i).Image))
+            im.Engine.SetSymbol("im", im)
+            let x1,x2,y1,y2 = (x-patchSize),(x+patchSize),(y-patchSize),(y+patchSize)
+            if x1>=1m && x2<=96m && y1>=1m && y2 <=96m then
+                let newMatrix = sliceMatrix im (x1,x2,y1,y2)
+                Some(R.as_vector(newMatrix).AsList())
+            else
+                None                
+        )
+
+
+// show patch of eye
+let im2 = R.matrix(nrow=21,ncol=21,data=(patches |> Seq.nth 10).Value)
+let imageParams2 = 
+    [
+        "x",R.c([|1..21|])
+        "y",R.c([|1..21|])
+        "z",im2
+        "col",R.gray(["level",R.c(seq { for i in 0. .. 255. -> i/255.})]|>namedParams)
+    ] |> namedParams
+R.image(imageParams2)
+    
+    
+
+
+
+
 
 
