@@ -1,8 +1,9 @@
 ﻿#I @"..\packages\FsLab.0.0.13-beta\"
 #load @"FsLab.fsx"
 
-
 open Deedle
+open Deedle.RPlugin
+open RProviderConverters
 open System
 open System.IO
 
@@ -105,3 +106,40 @@ R.points(imPointParams rightEyeCenterXy "green")
 
 // add all nose points
 seq { for f in faces -> f } |> Seq.iter (fun f -> R.points(imPointParams (imXy f.NoseTip) "red") |> ignore)
+
+// Get R Data Frame
+let facesR_Df =    
+    let d x =
+        match Double.TryParse x with
+        | true, v -> v
+        | _ -> Double.NaN
+
+    let lines = lines |> Seq.map(fun (r:string) -> r.Split(','))
+    lines 
+    |> Seq.nth 0 
+    |> Seq.mapi (fun i h -> h, lines |> Seq.skip 1 |> Seq.map (fun r -> d r.[i]))
+    |> (namedParams >> R.data_frame)
+ 
+R.colMeans(facesR_Df, na_rm=true)
+
+
+let facesDeedleDf =
+    let d x =
+        match Double.TryParse x with
+        | true, v -> v
+        | _ -> Double.NaN
+
+    let lines = lines |> Seq.map(fun (r:string) -> r.Split(','))
+    lines 
+    |> Seq.nth 0 
+    |> Seq.mapi (fun i h -> h, lines |> Seq.skip 1 |> Seq.map (fun r -> d r.[i]) |> Series.ofValues)
+    |> Frame.ofColumns
+
+facesDeedleDf?left_eye_center_x
+facesDeedleDf.Columns
+facesDeedleDf.Rows
+
+// deedle data frame can be used with R!
+let dv:float[] = R.colMeans(facesDeedleDf, na_rm=true).GetValue()
+
+
