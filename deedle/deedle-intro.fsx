@@ -40,6 +40,8 @@ let second = Series(dateRange (DateTime(2013,1,1)) 10, rand 10)
 
 let df1 = Frame(["first"; "second"], [first; second])
 
+let dff = Frame(["first"; "second"], [Series.ofValues [ Some(10.0); Some(20.0); None ]; Series.ofValues [ 10.0; 20.0; 30.0 ]])
+"test" => Series.ofValues [ Some(10.0); Some(20.0); None ]
 // The same as previously
 let df2 = Frame.ofColumns ["first" => first; "second" => second]
 
