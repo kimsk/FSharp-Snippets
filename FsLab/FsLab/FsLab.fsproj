@@ -92,6 +92,7 @@
     <None Include="packages.config" />
     <None Include="app.config" />
     <None Include="DeedleAndR.fsx" />
+    <None Include="Math.NET.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
