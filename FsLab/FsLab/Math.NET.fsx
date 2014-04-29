@@ -31,3 +31,32 @@ let ident2 = DenseMatrix.diag 5 1.
 
 let m2 = matrix [[1.; 2.]; [3.; 4.]]
 let v2 = vector [4.;5.]
+
+
+// slicing matrix
+let im = DenseMatrix.CreateRandom(96, 96, normal)
+im.GetSlice(Some(1),Some(21),Some(1),Some(21))
+
+let slice r1 r2 r3 r4 (m:Matrix<float>) = 
+    m.GetSlice(Some(r1), Some(r2), Some(r3), Some(r4))
+
+#time
+//let matrices = [|1..7049|] |> Array.map (fun _ -> DenseMatrix.CreateRandom(96, 96, normal))
+let matrices = [|1..7049|] |> Array.map (fun _ -> DenseMatrix.create 96 96 1.)
+#time
+
+#time
+let sliced = matrices |> Array.map (fun m -> m |> slice 1 21 1 21)
+#time
+
+
+
+#time
+let means = 
+    let len = matrices.Length
+
+    (matrices 
+    |> Array.map (fun m -> m |> slice 1 21 1 21)
+    |> Array.reduce (fun acc m -> acc + m))/(float len)
+    
+#time
