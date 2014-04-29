@@ -7,6 +7,7 @@ open RProviderConverters
 open System
 open System.IO
 
+
 type Face =
     {
         LeftEyeCenter:Option<decimal*decimal>
@@ -82,25 +83,29 @@ let imXy p = match p with Some(x,y) -> (96m-x),(96m-y) | _ -> (0m,0m)
 let face i = faces |> Seq.nth i
 let imPointParams (x,y) color = ["x",o x;"y",o y;"col",o color] |> namedParams
 
-// get values from face
-let im = R.matrix(nrow=96,ncol=96,data=Array.rev((face 0).Image))
-let noseTipXy = imXy (face 0).NoseTip
-let leftEyeCenterXy = imXy (face 0).LeftEyeCenter
-let rightEyeCenterXy = imXy (face 0).RightEyeCenter
-
 // Visualize image using R
+let gray = R.gray(["level",R.c(seq { for i in 0. .. 255. -> i/255.})]|>namedParams)
+let grayScaleImage nrow ncol data =
+    [ 
+        "x", R.c([|1..nrow|])
+        "y", R.c([|1..ncol|])
+        "z", R.matrix(nrow=nrow,ncol=ncol,data=data)
+        "col", gray
+    ] |> namedParams |> R.image
+
+// helper function to slice matrix
+let sliceMatrix (m:SymbolicExpression) (x1,x2,y1,y2) =
+    m.Engine.SetSymbol("m", m)
+    sprintf "m[%M:%M,%M:%M]" x1 x2 y1 y2 |> m.Engine.Evaluate
+
 // image(1:96, 1:96, im, col=gray((0:255)/255))
-let imageParams = 
-    [
-        "x",R.c([|1..96|])
-        "y",R.c([|1..96|])
-        "z",im
-        "col",R.gray(["level",R.c(seq { for i in 0. .. 255. -> i/255.})]|>namedParams)
-    ] |> namedParams
-R.image(imageParams)
+Array.rev((face 0).Image) |> grayScaleImage 96 96
 
 // add points for nose tip, left eye, right eye
 // points(96-d.train$nose_tip_x[1], 96-d.train$nose_tip_y[1], col="red")
+let noseTipXy = imXy (face 0).NoseTip
+let leftEyeCenterXy = imXy (face 0).LeftEyeCenter
+let rightEyeCenterXy = imXy (face 0).RightEyeCenter
 R.points(imPointParams noseTipXy "red")
 R.points(imPointParams leftEyeCenterXy "blue")
 R.points(imPointParams rightEyeCenterXy "green")
@@ -123,6 +128,11 @@ let facesR_Df =
  
 R.colMeans(facesR_Df, na_rm=true)
 
+let v = R.c([|1..400|])
+let m = R.matrix(data=v, nrow=20,ncol=20)
+R.colMeans(m)
+
+
 #time
 let facesDeedleDf =
     let d x =
@@ -136,52 +146,42 @@ let facesDeedleDf =
     |> Seq.mapi (fun i h -> h, lines |> Seq.skip 1 |> Seq.map (fun r -> d r.[i]) |> Series.ofValues)
     |> Frame.ofColumns
 #time
-
 // deedle data frame can be used with R!
 let dv:float[] = R.colMeans(facesDeedleDf, na_rm=true).GetValue()
 facesDeedleDf?left_eye_center_x
 facesDeedleDf.Columns
 facesDeedleDf.Rows
-
-
-// helper function to slice matrix
-let sliceMatrix (m:SymbolicExpression) (x1,x2,y1,y2) =
-    m.Engine.SetSymbol("m", m)
-    sprintf "m[%M:%M,%M:%M]" x1 x2 y1 y2 |> m.Engine.Evaluate
-
+facesDeedleDf.Rows.[10]
 
 let patchSize = 10m
+// too slow...
 let patches = 
-    let leftEyeCenters = 
-        faces 
-        |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) 
-        |> Seq.map (fun f -> f.LeftEyeCenter.Value)
-
-    leftEyeCenters
+    faces 
+    |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) 
+    |> Seq.map (fun f -> f.LeftEyeCenter.Value)
     |> Seq.mapi (fun i (x,y) -> 
-            let im = R.matrix(nrow=96,ncol=96,data=Array.rev((face i).Image))
-            im.Engine.SetSymbol("im", im)
+            let im = R.matrix(nrow=96,ncol=96,data=(face i).Image)
             let x1,x2,y1,y2 = (x-patchSize),(x+patchSize),(y-patchSize),(y+patchSize)
             if x1>=1m && x2<=96m && y1>=1m && y2 <=96m then
                 let newMatrix = sliceMatrix im (x1,x2,y1,y2)
-                Some(R.as_vector(newMatrix).AsList())
+                Some(newMatrix)
             else
                 None                
         )
-
+    |> Seq.filter (fun p -> p.IsSome)
+    |> Seq.map (fun p -> p.Value)
 
 // show patch of eye
-let im2 = R.matrix(nrow=21,ncol=21,data=(patches |> Seq.nth 10).Value)
-let imageParams2 = 
-    [
-        "x",R.c([|1..21|])
-        "y",R.c([|1..21|])
-        "z",im2
-        "col",R.gray(["level",R.c(seq { for i in 0. .. 255. -> i/255.})]|>namedParams)
-    ] |> namedParams
-R.image(imageParams2)
+R.rev(x=(patches |> Seq.nth 2 |> R.as_vector)) |> grayScaleImage 21 21
+
+// calculate means
+#time
+let p10 = patches |> Seq.take 1000 |> Seq.map (R.as_vector) |> Seq.collect (fun p -> p.AsNumeric() |> Array.ofSeq)
+let m10 = R.matrix(data=p10,nrow=1000,ncol=441)
+#time
+let means = R.colMeans(m10)
     
-    
+R.rev(means) |> grayScaleImage 21 21 
 
 
 
