@@ -93,6 +93,7 @@
     <None Include="app.config" />
     <None Include="DeedleAndR.fsx" />
     <None Include="Math.NET.fsx" />
+    <None Include="Linear-Algebra-with-Math.NET.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
