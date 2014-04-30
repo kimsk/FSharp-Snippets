@@ -2,6 +2,7 @@
 #load @"FsLab.fsx"
 
 // Math.NET
+open MathNet.Numerics
 open MathNet.Numerics.LinearAlgebra
 open MathNet.Numerics.LinearAlgebra.Double
 open MathNet.Numerics.Distributions
@@ -61,3 +62,7 @@ let means =
     |> Array.reduce (fun acc m -> acc + m))/(float len)
     
 #time
+
+
+
+let x = SpecialFunctions.Factorial(14); 
