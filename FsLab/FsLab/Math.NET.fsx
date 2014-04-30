@@ -36,6 +36,7 @@ let v2 = vector [4.;5.]
 // slicing matrix
 let im = DenseMatrix.CreateRandom(96, 96, normal)
 im.GetSlice(Some(1),Some(21),Some(1),Some(21))
+im.SubMatrix(1,21-1,1,21-1)
 
 let slice r1 r2 r3 r4 (m:Matrix<float>) = 
     m.GetSlice(Some(r1), Some(r2), Some(r3), Some(r4))
