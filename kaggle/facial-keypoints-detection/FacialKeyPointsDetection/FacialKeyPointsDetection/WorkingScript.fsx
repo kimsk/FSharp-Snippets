@@ -104,6 +104,13 @@ R.points(imPointParams rightEyeCenterXy "green")
 // add all nose points
 seq { for f in faces -> f } |> Seq.iter (fun f -> R.points(imPointParams (imXy f.NoseTip) "red") |> ignore)
 
+let imToArray2D (im:int[]) =
+    Array2D.init 96 96 (fun i j -> im.[(i*96) + j] |> float)
+
+let im0 = (face 0).Image |> imToArray2D
+let im0m:Matrix<float> = DenseMatrix.ofArray2  im0
+R.c(im0m.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev ) |> grayScaleImage 96 96
+
 let patchSize = 10m
 let slicedMatrices = 
     faces 
@@ -112,14 +119,16 @@ let slicedMatrices =
             let x, y = f.LeftEyeCenter.Value
             let x1,x2,y1,y2 = int(x-patchSize), int(x+patchSize), int(y-patchSize), int(y+patchSize)
             if x1>=1 && x2<=96 && y1>=1 && y2 <=96 then
-                (DenseMatrix(96, 96, f.Image |> Array.map(float))).SubMatrix(x1,(x2-x1+1),y1,y2-y1+1)
+                (f.Image |> imToArray2D).[y1..y2,x1..x2] 
+                |> DenseMatrix.ofArray2 
                 |> Some
             else
                 None              
         ) 
     |> Seq.cache
 
-let vc = R.c([0..20] |> Seq.collect (fun i -> (slicedMatrices |> Seq.nth 7032).Column(i)) |> Array.ofSeq |> Array.rev)
+let m2:Matrix<float> = (slicedMatrices |> Seq.nth 0)
+let vc = R.c(m2.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
 vc |> grayScaleImage 21 21
 
 #time
@@ -132,7 +141,18 @@ let means2 =
     
 #time
 
-let meansVc = R.c([0..20] |> Seq.collect (fun i -> means2.Column(i)) |> Array.ofSeq |> Array.rev)
+let meansVc = R.c(means2.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
 meansVc |> grayScaleImage 21 21
 
+// Searching for keypoint
 let searchSize = 2
+
+let meanX, meanY = 
+    let leftEyeCenters = 
+        faces 
+        |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) 
+
+    leftEyeCenters |> Seq.map (fun f -> fst f.LeftEyeCenter.Value) |> Seq.average,
+    leftEyeCenters |> Seq.map (fun f -> snd f.LeftEyeCenter.Value) |> Seq.average 
+
+let x1,x2,y1,y2 = int(meanX)-searchSize, int(meanX)+searchSize, int(meanY)-searchSize, int(meanY)+searchSize
