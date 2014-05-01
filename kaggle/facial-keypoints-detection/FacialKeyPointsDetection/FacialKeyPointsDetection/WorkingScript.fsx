@@ -156,3 +156,14 @@ let meanX, meanY =
     leftEyeCenters |> Seq.map (fun f -> snd f.LeftEyeCenter.Value) |> Seq.average 
 
 let x1,x2,y1,y2 = int(meanX)-searchSize, int(meanX)+searchSize, int(meanY)-searchSize, int(meanY)+searchSize
+
+// (64,35) to (68,39)
+// params <- expand.grid(x = x1:x2, y = y1:y2)
+[|
+    for i in x1..x2 do
+        for j in y1..y2 ->
+            i,j
+|] 
+|> Array.mapi (fun i (x,y) -> i+1,x,y)
+|> Array.collect (fun (i,x,y) -> [|(i,"x",x);(i,"y",y)|])
+|> Frame.ofValues
