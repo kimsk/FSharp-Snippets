@@ -22,5 +22,3 @@ let c2 = R.eval(R.parse(text="c(1,2,3)"))
 let arr = ["One",R.c([|1..10|]);"Two",R.c([|11..20|])]
 let df = R.data_frame(namedParams arr)
 
-// slice matrix
-// ??
