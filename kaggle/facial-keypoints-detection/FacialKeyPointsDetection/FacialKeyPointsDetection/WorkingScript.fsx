@@ -14,6 +14,7 @@ open RProvider.graphics
 open RProvider.grDevices
 open RDotNet
 
+open MathNet.Numerics
 open MathNet.Numerics.LinearAlgebra
 open MathNet.Numerics.LinearAlgebra.Double
 
@@ -37,9 +38,7 @@ type Face =
         Image:int[]
     }
 
-let lines = File.ReadAllLines("D:/kaggle/facial-keypoints-detection/training.csv")
-
-let faces =      
+let toFaces lines =      
     let d = Decimal.TryParse
     let toXy v1 v2 =         
         match d v1 with
@@ -73,6 +72,9 @@ let faces =
             }
         )
 
+let lines = File.ReadAllLines("D:/kaggle/facial-keypoints-detection/training.csv")
+let faces = lines |> toFaces
+
 let face i = faces |> Seq.nth i
 let o x = x :> obj
 let imXy p = match p with Some(x,y) -> (96m-x),(96m-y) | _ -> (0m,0m)     
@@ -104,8 +106,7 @@ R.points(imPointParams rightEyeCenterXy "green")
 // add all nose points
 seq { for f in faces -> f } |> Seq.iter (fun f -> R.points(imPointParams (imXy f.NoseTip) "red") |> ignore)
 
-let imToArray2D (im:int[]) =
-    Array2D.init 96 96 (fun i j -> im.[(i*96) + j] |> float)
+let imToArray2D (im:int[]) = Array2D.init 96 96 (fun i j -> im.[(i*96) + j] |> float)
 
 let im0 = (face 0).Image |> imToArray2D
 let im0m:Matrix<float> = DenseMatrix.ofArray2  im0
@@ -132,7 +133,7 @@ let vc = R.c(m2.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
 vc |> grayScaleImage 21 21
 
 #time
-let means2 = 
+let means = 
     let len = slicedMatrices |> Seq.length
 
     (slicedMatrices
@@ -141,7 +142,7 @@ let means2 =
     
 #time
 
-let meansVc = R.c(means2.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
+let meansVc = R.c(means.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
 meansVc |> grayScaleImage 21 21
 
 // Searching for keypoint
@@ -159,11 +160,42 @@ let x1,x2,y1,y2 = int(meanX)-searchSize, int(meanX)+searchSize, int(meanY)-searc
 
 // (64,35) to (68,39)
 // params <- expand.grid(x = x1:x2, y = y1:y2)
-[|
-    for i in x1..x2 do
-        for j in y1..y2 ->
-            i,j
-|] 
-|> Array.mapi (fun i (x,y) -> [|(i,"x",x);(i,"y",y)|])
-|> Array.collect id
-|> Frame.ofValues
+let xy_params =
+    [|
+        for i in x1..x2 do
+            for j in y1..y2 ->
+                i,j
+    |] 
+    |> Array.mapi (fun i (x,y) -> [|(i,"x",x);(i,"y",y)|])
+    |> Array.collect id
+    |> Frame.ofValues
+
+// get test images
+let testLines = File.ReadAllLines("D:/kaggle/facial-keypoints-detection/test.csv")
+let testImages = 
+    (testLines |> Seq.skip 1 |> Seq.map (fun (l:string) -> l.Split(',')))
+    |> Seq.map (fun l -> l.[1].Split(' ') |> Seq.map Int32.Parse |> Array.ofSeq)    
+    |> Array.ofSeq
+
+open MathNet.Numerics.Statistics
+let getCorrelation (x,y) im =    
+    let p = 
+        (im |> imToArray2D).[int(y-float(patchSize))..int(y+float(patchSize)),int(x-float(patchSize))..int(x+float(patchSize))] 
+        |> DenseMatrix.ofArray2
+
+    let pPatch = p.EnumerateRows() |> Seq.collect id
+    let meanPatch = means.EnumerateRows() |> Seq.collect id    
+    Correlation.Pearson(pPatch, meanPatch)
+
+let scores = xy_params.Rows.Values 
+                |> Seq.map (fun s -> getCorrelation (s?x,s?y) testImages.[0])
+                |> Series.ofValues 
+xy_params?score <- scores
+
+let maxRow = xy_params.Rows.Values |> Seq.maxBy (fun r -> r?score)
+
+
+
+Array.rev(testImages.[0])  |> grayScaleImage 96 96
+R.points(imPointParams (maxRow?y,maxRow?x) "blue")
+
