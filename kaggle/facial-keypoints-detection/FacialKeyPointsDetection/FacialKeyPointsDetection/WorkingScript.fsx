@@ -1,6 +1,9 @@
 ﻿#I @"..\packages\FsLab.0.0.13-beta\"
 #load @"FsLab.fsx"
 
+let _training_ = "d:/kaggle/facial-keypoints-detection/training.csv"
+let _test_ = "d:/kaggle/facial-keypoints-detection/test.csv"
+
 open Deedle
 open Deedle.RPlugin
 open RProviderConverters
@@ -72,7 +75,7 @@ let toFaces lines =
             }
         )
 
-let lines = File.ReadAllLines("D:/kaggle/facial-keypoints-detection/training.csv")
+let lines = File.ReadAllLines(_training_)
 let faces = lines |> toFaces
 
 let face i = faces |> Seq.nth i
@@ -146,8 +149,8 @@ let meansVc = R.c(means.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Arra
 meansVc |> grayScaleImage 21 21
 
 // Searching for keypoint
-let searchSize = 2
-
+let searchSize = 20
+#time
 let meanX, meanY = 
     let leftEyeCenters = 
         faces 
@@ -155,7 +158,7 @@ let meanX, meanY =
 
     leftEyeCenters |> Seq.map (fun f -> fst f.LeftEyeCenter.Value) |> Seq.average,
     leftEyeCenters |> Seq.map (fun f -> snd f.LeftEyeCenter.Value) |> Seq.average 
-
+#time
 let x1,x2,y1,y2 = int(meanX)-searchSize, int(meanX)+searchSize, int(meanY)-searchSize, int(meanY)+searchSize
 
 // (64,35) to (68,39)
@@ -171,7 +174,7 @@ let xy_params =
     |> Frame.ofValues
 
 // get test images
-let testLines = File.ReadAllLines("D:/kaggle/facial-keypoints-detection/test.csv")
+let testLines = File.ReadAllLines(_test_)
 let testImages = 
     (testLines |> Seq.skip 1 |> Seq.map (fun (l:string) -> l.Split(',')))
     |> Seq.map (fun l -> l.[1].Split(' ') |> Seq.map Int32.Parse |> Array.ofSeq)    
@@ -187,15 +190,19 @@ let getCorrelation (x,y) im =
     let meanPatch = means.EnumerateRows() |> Seq.collect id    
     Correlation.Pearson(pPatch, meanPatch)
 
-let scores = xy_params.Rows.Values 
-                |> Seq.map (fun s -> getCorrelation (s?x,s?y) testImages.[0])
-                |> Series.ofValues 
-xy_params?score <- scores
+let getMaxRow im =
+    let scores = 
+        xy_params.Rows.Values 
+        |> Seq.map (fun s -> getCorrelation (s?x,s?y) im)
+        |> Series.ofValues 
+    let xyDf = xy_params.Clone()
+    xyDf?score <- scores
+    xyDf.Rows.Values |> Seq.maxBy (fun r -> r?score)
 
-let maxRow = xy_params.Rows.Values |> Seq.maxBy (fun r -> r?score)
 
+let im = testImages.[8]
+Array.rev(im)  |> grayScaleImage 96 96
 
-
-Array.rev(testImages.[0])  |> grayScaleImage 96 96
+let maxRow = getMaxRow im
 R.points(imPointParams (maxRow?y,maxRow?x) "blue")
 
