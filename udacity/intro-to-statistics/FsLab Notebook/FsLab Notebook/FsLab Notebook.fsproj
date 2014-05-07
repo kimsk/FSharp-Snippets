@@ -60,7 +60,8 @@
     <None Include="styles\deedle.css" />
     <None Include="styles\tips.js" />
     <None Include="packages.config" />
-    <None Include="ScatterPlot.fsx" />
+    <None Include="ScatterPlots.fsx" />
+    <None Include="BarCharts.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CSharpFormat">

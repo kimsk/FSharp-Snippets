@@ -21,7 +21,7 @@ open FSharp.Charting
 Chart.Point(Seq.zip sizes prices1)
 (*** include-it:chart1 ***)
 (**
-Is this linear? **Yes**
+Is this [Linear]? **Yes**
 *)
 (**
 Do we believe there is a fixed price per square foot? **Yes**
@@ -38,7 +38,7 @@ let df2 = Frame(["size"; "price"], [ Series.ofValues sizes; Series.ofValues pric
 Chart.Point(Seq.zip sizes prices2)
 (*** include-it:chart2 ***)
 (**
-Is this linear? **Yes**
+Is this [Linear]? **Yes**
 *)
 (**
 Do we believe there is a fixed price per square foot? **No**
@@ -62,7 +62,7 @@ let df3 = Frame(["size"; "price"],  [ Series.ofValues sizes; Series.ofValues pri
 Chart.Point(Seq.zip sizes prices3)
 (*** include-it:chart3 ***)
 (**
-Is this linear? **No**, because there are [Outlier]s
+Is this [Linear]? **No**, because there are [Outlier]s
 *)
 (**
 [Scatter Plots]: https://www.udacity.com/course/viewer#!/c-st101/l-48646867
