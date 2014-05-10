@@ -27,18 +27,39 @@ let height= [65.78; 71.52; 69.4; 68.22; 67.79; 68.7; 69.8; 70.01; 67.9; 66.78;
 67.82; 70.6; 71.8; 69.21; 66.8; 67.66; 67.81; 64.05; 68.57; 65.18; 69.66; 67.97; 
 65.98; 68.67; 66.88; 67.7; 69.82; 69.09]
 
-// Divide to 5 sub lists
-let heightGroups = 
-    [
-        let take = (height |> Seq.length)/5
-        for i in 0..4 ->
-            height |> Seq.sort |> Seq.skip (i*5) |> Seq.take take
-    ]
+let getDist num l = 
+    let ranges = 
+        let min,max = (l |> Seq.min), (l |> Seq.max)
+        let value = (max-min)/float(num)
+        [ for i in 1. .. float(num) -> min+((i)*value) ] 
+    
+    let counts = Array.init num (fun _ -> 0)
 
-heightGroups 
-|> Seq.map (fun (s:seq<float>) -> 
-        sprintf "%.2f-%.2f" (s |> Seq.head) (s |> Seq.last), (s |> Seq.length)
-    )
+    let rec loop r l =        
+        match r with
+        | [] -> ()
+        | hr::tr -> 
+            let i = (r |> Seq.length) - 1
+            match l with
+            | [] -> ()
+            | h::t ->
+                if h <= hr then
+                    counts.[i] <- counts.[i] + 1
+                    printfn "%f %f %A" h hr counts
+                    loop r t
+                else 
+                    counts.[i-1] <- counts.[i-1] + 1
+                    printfn "%f %f %A" h hr counts
+                    loop tr t
+
+    loop ranges (l |> List.sort)
+    (ranges, (counts |> Array.rev)) ||> Seq.zip 
+
+let heightDist = getDist 5 height
+(*** include-value:heightDist |> Array.ofSeq ***)
+(*** define-output:chart2 ***)
+Chart.Column(heightDist)
+(*** include-it:chart2 ***)
 
 let weight= [112.99; 136.49; 153.03; 142.34; 144.3; 123.3; 141.49; 136.46; 
 112.37; 120.67; 127.45; 114.14; 125.61; 122.46; 116.09; 140.0; 129.5; 142.97; 
