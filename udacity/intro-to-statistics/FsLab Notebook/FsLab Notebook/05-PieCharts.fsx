@@ -10,7 +10,7 @@ F# code for [Pie Charts] unit. Pie chart is used to show relative data.
 *)
 let votes1 = ["A",724000;"B",181000]
 (** 
-    Find the percentages:
+Find the percentages:
 *)
 let percentages1 = 
     let sum = votes1 |> Seq.map snd |> Seq.sum
@@ -26,7 +26,7 @@ Chart.Pie(classes)
 (*** include-it:chart2 ***)
 let votes2 = ["A",175000;"B",50000;"C",25000;"D",50000]
 (** 
-    Find the percentages for votes2.
+Find the percentages for votes2.
 *)
 let percentages2 = 
     let sum = votes2 |> Seq.map snd |> Seq.sum
