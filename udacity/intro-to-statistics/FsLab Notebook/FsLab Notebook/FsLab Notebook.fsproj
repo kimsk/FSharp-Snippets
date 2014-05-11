@@ -64,6 +64,7 @@
     <None Include="04-BarCharts.fsx" />
     <None Include="05-PieCharts.fsx" />
     <None Include="06-ProgrammingCharts.fsx" />
+    <None Include="07-AdmissionsCaseStudy.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CSharpFormat">
