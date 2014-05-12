@@ -66,6 +66,8 @@
     <None Include="06-ProgrammingCharts.fsx" />
     <None Include="07-AdmissionsCaseStudy.fsx" />
     <None Include="08-Probability.fsx" />
+    <None Include="09-ConditionalProbability.fsx" />
+    <None Include="10-BayesRule.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CSharpFormat">

@@ -22,9 +22,4 @@ If we look at only each major, we'd think female is being favored. But the total
 *)
 (**
 [Admissions Case Study]: https://www.udacity.com/course/viewer#!/c-st101/l-48759015
-[Linear]: https://en.wikipedia.org/wiki/Linear
-[Outlier]: https://en.wikipedia.org/wiki/Outlier
-[Interpolation]: http://en.wikipedia.org/wiki/Interpolation
-[Noise]: http://en.wikipedia.org/wiki/Statistical_noise
-[Histogram]: https://en.wikipedia.org/wiki/Histogram
 *)

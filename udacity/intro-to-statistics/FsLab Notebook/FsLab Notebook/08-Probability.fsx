@@ -62,10 +62,5 @@ P(Exactly one H in 3 flips) =
 *)
 (**
 [Probability]: https://www.udacity.com/course/viewer#!/c-st101/l-48738235
-[Linear]: https://en.wikipedia.org/wiki/Linear
-[Outlier]: https://en.wikipedia.org/wiki/Outlier
-[Interpolation]: http://en.wikipedia.org/wiki/Interpolation
-[Noise]: http://en.wikipedia.org/wiki/Statistical_noise
-[Histogram]: https://en.wikipedia.org/wiki/Histogram
 *)
 
