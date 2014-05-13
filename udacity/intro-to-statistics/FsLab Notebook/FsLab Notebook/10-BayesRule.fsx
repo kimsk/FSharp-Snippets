@@ -93,6 +93,43 @@ What are the posterior probabilities P(R|see R) and P(G|see R)?
 (*** include-value:``P(R|see R)`` ***)
 (*** include-value:``P(G|see R)`` ***)
 (**
+#### Robot Sensing 4
+*)
+let ``P(A)``,``P(B)``,``P(C)`` = 1./3.,1./3.,1./3.
+let ``P(R|A)``,``P(G|B)``,``P(G|C)`` = 0.9,0.9,0.9
+
+(**
+What is P(A,R)? P(A).P(R|A)
+What is P(B,R)? P(B).P(R|B)
+What is P(C,R)? P(C).P(R|C)
+*)
+let ``P(A,R)`` = ``P(A)``*``P(R|A)`` // 0.3
+let ``P(B,R)`` = ``P(B)``*(1.-``P(G|B)``) // 0.0333333
+let ``P(C,R)`` = ``P(C)``*(1.-``P(G|C)``) // 0.0333333
+let ``P(R)`` = ``P(A,R)`` + ``P(B,R)`` + ``P(C,R)``
+(*** include-value:``P(R)`` ***)
+let ``P(A|R)`` = ``P(A,R)``/``P(R)``
+(*** include-value:``P(A|R)`` ***)
+let ``P(B|R)`` = ``P(B,R)``/``P(R)``
+(*** include-value:``P(B|R)`` ***)
+let ``P(C|R)`` = ``P(C,R)``/``P(R)``
+(*** include-value:``P(C|R)`` ***)
+(**
+#### Sebastian
+*)
+let ``P(gone)`` = 0.6
+let ``P(home)`` = 1.-``P(gone)``
+let ``P(rain|home)`` = 0.01
+let ``P(rain|gone)`` = 0.3
+(**
+What is P(home|rain)?
+*)
+let ``P(home,rain)`` = ``P(home)``*``P(rain|home)``
+let ``P(gone,rain)`` = ``P(gone)``*``P(rain|gone)``
+let ``P(rain)`` = ``P(home,rain)`` + ``P(gone,rain)``
+let ``P(home|rain)`` = ``P(home,rain)``/``P(rain)``
+(*** include-value:``P(home|rain)`` ***)
+(**
 [Bayes Rule]: https://www.udacity.com/course/viewer#!/c-st101/l-48703346
 [Thomas Bayes]: https://en.wikipedia.org/wiki/Thomas_Bayes
 [Sensitivity]: https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity
