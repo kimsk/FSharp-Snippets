@@ -130,6 +130,22 @@ let ``P(rain)`` = ``P(home,rain)`` + ``P(gone,rain)``
 let ``P(home|rain)`` = ``P(home,rain)``/``P(rain)``
 (*** include-value:``P(home|rain)`` ***)
 (**
+### Recap
+
+We know: 
+
+- P(C) 
+- P(Pos|C) ([Sensitivity])
+- P(~C|Pos) ([Specificity])
+- P(C,Pos) = P(C).P(Pos|C)
+- P(~C,Pos) = P(~C).P(Pos|~C)
+- P(Pos) = P(C,Pos)+P(~C,Pos) (normalizer)
+
+What is P(C|Pos)?
+
+**P(C|Pos) = P(C, Pos)/P(Pos)**
+*)
+(**
 [Bayes Rule]: https://www.udacity.com/course/viewer#!/c-st101/l-48703346
 [Thomas Bayes]: https://en.wikipedia.org/wiki/Thomas_Bayes
 [Sensitivity]: https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity

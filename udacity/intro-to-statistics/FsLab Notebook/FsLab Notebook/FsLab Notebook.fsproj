@@ -68,6 +68,7 @@
     <None Include="08-Probability.fsx" />
     <None Include="09-ConditionalProbability.fsx" />
     <None Include="10-BayesRule.fsx" />
+    <None Include="11-ProgrammingBayesRule.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CSharpFormat">
