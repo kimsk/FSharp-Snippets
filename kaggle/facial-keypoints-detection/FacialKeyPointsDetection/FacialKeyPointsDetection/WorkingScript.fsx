@@ -115,8 +115,11 @@ let im0 = (face 0).Image |> imToArray2D
 let im0m:Matrix<float> = DenseMatrix.ofArray2  im0
 R.c(im0m.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev ) |> grayScaleImage 96 96
 
+
 let patchSize = 10m
-let slicedMatrices = 
+
+// show average left eye
+let leftEyeCenterSlicedMatrices = 
     faces 
     |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) 
     |> Seq.choose (fun f -> 
@@ -131,22 +134,56 @@ let slicedMatrices =
         ) 
     |> Seq.cache
 
-let m2:Matrix<float> = (slicedMatrices |> Seq.nth 0)
-let vc = R.c(m2.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
-vc |> grayScaleImage 21 21
+let firstLeftEye:Matrix<float> = (leftEyeCenterSlicedMatrices |> Seq.nth 0)
+R.c(firstLeftEye.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
+|> grayScaleImage 21 21
 
 #time
-let means = 
-    let len = slicedMatrices |> Seq.length
+let leftEyeMeans = 
+    let len = leftEyeCenterSlicedMatrices |> Seq.length
 
-    (slicedMatrices
+    (leftEyeCenterSlicedMatrices
     |> Array.ofSeq     
     |> Array.reduce (fun acc m -> acc + m))/(float len)
     
 #time
 
-let meansVc = R.c(means.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
-meansVc |> grayScaleImage 21 21
+R.c(leftEyeMeans.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
+|> grayScaleImage 21 21
+
+
+// show average right eye
+let rightEyeCenterSlicedMatrices = 
+    faces 
+    |> Seq.filter (fun f -> f.RightEyeCenter.IsSome) 
+    |> Seq.choose (fun f -> 
+            let x, y = f.RightEyeCenter.Value
+            let x1,x2,y1,y2 = int(x-patchSize), int(x+patchSize), int(y-patchSize), int(y+patchSize)
+            if x1>=1 && x2<=96 && y1>=1 && y2 <=96 then
+                (f.Image |> imToArray2D).[y1..y2,x1..x2] 
+                |> DenseMatrix.ofArray2 
+                |> Some
+            else
+                None              
+        ) 
+    |> Seq.cache
+
+let firstRightEye:Matrix<float> = (rightEyeCenterSlicedMatrices |> Seq.nth 0)
+R.c(firstRightEye.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
+|> grayScaleImage 21 21
+
+#time
+let rightEyeMeans = 
+    let len = rightEyeCenterSlicedMatrices |> Seq.length
+
+    (rightEyeCenterSlicedMatrices
+    |> Array.ofSeq     
+    |> Array.reduce (fun acc m -> acc + m))/(float len)
+    
+#time
+
+R.c(rightEyeMeans.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
+|> grayScaleImage 21 21
 
 // Searching for keypoint
 let searchSize = 20
@@ -187,7 +224,7 @@ let getCorrelation (x,y) im =
         |> DenseMatrix.ofArray2
 
     let pPatch = p.EnumerateRows() |> Seq.collect id
-    let meanPatch = means.EnumerateRows() |> Seq.collect id    
+    let meanPatch = leftEyeMeans.EnumerateRows() |> Seq.collect id    
     Correlation.Pearson(pPatch, meanPatch)
 
 let getMaxRow im =
