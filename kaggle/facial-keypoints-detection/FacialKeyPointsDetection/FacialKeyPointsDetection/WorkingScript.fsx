@@ -116,23 +116,22 @@ let im0m:Matrix<float> = DenseMatrix.ofArray2  im0
 R.c(im0m.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev ) |> grayScaleImage 96 96
 
 
-let patchSize = 10m
 
-// show average left eye
-let leftEyeCenterSlicedMatrices = 
-    faces 
-    |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) 
-    |> Seq.choose (fun f -> 
-            let x, y = f.LeftEyeCenter.Value
-            let x1,x2,y1,y2 = int(x-patchSize), int(x+patchSize), int(y-patchSize), int(y+patchSize)
-            if x1>=1 && x2<=96 && y1>=1 && y2 <=96 then
-                (f.Image |> imToArray2D).[y1..y2,x1..x2] 
+let getPatch size values =
+    values
+    |> Seq.choose (fun (x,y,img) ->
+            let x1,x2,y1,y2 = (x-size), (x+size), (y-size), (y+size)            
+            if x1>=0 && x2<96 && y1>=0 && y2 <96 then
+                (img |> imToArray2D).[y1..y2,x1..x2] 
                 |> DenseMatrix.ofArray2 
                 |> Some
             else
-                None              
-        ) 
-    |> Seq.cache
+                None 
+        )
+
+let leftEyeCenterSlicedMatrices = 
+    (faces |> Seq.filter (fun f -> f.LeftEyeCenter.IsSome) |> Seq.map (fun f -> fst(f.LeftEyeCenter.Value) |> int, snd(f.LeftEyeCenter.Value) |> int, f.Image))
+    |> getPatch 10 
 
 let firstLeftEye:Matrix<float> = (leftEyeCenterSlicedMatrices |> Seq.nth 0)
 R.c(firstLeftEye.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
@@ -154,19 +153,8 @@ R.c(leftEyeMeans.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
 
 // show average right eye
 let rightEyeCenterSlicedMatrices = 
-    faces 
-    |> Seq.filter (fun f -> f.RightEyeCenter.IsSome) 
-    |> Seq.choose (fun f -> 
-            let x, y = f.RightEyeCenter.Value
-            let x1,x2,y1,y2 = int(x-patchSize), int(x+patchSize), int(y-patchSize), int(y+patchSize)
-            if x1>=1 && x2<=96 && y1>=1 && y2 <=96 then
-                (f.Image |> imToArray2D).[y1..y2,x1..x2] 
-                |> DenseMatrix.ofArray2 
-                |> Some
-            else
-                None              
-        ) 
-    |> Seq.cache
+    (faces |> Seq.filter (fun f -> f.RightEyeCenter.IsSome) |> Seq.map (fun f -> fst(f.RightEyeCenter.Value) |> int, snd(f.RightEyeCenter.Value) |> int, f.Image))
+    |> getPatch 10 
 
 let firstRightEye:Matrix<float> = (rightEyeCenterSlicedMatrices |> Seq.nth 0)
 R.c(firstRightEye.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
@@ -184,6 +172,29 @@ let rightEyeMeans =
 
 R.c(rightEyeMeans.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
 |> grayScaleImage 21 21
+
+// show average nose tip
+let noseTipSlicedMatrices = 
+    (faces |> Seq.filter (fun f -> f.NoseTip.IsSome) |> Seq.map (fun f -> fst(f.NoseTip.Value) |> int, snd(f.NoseTip.Value) |> int, f.Image))
+    |> getPatch 10 
+
+let firstNoseTip:Matrix<float> = (noseTipSlicedMatrices |> Seq.nth 0)
+R.c(firstNoseTip.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev )
+|> grayScaleImage 21 21
+
+#time
+let noseTipMeans = 
+    let len = noseTipSlicedMatrices |> Seq.length
+
+    (noseTipSlicedMatrices
+    |> Array.ofSeq     
+    |> Array.reduce (fun acc m -> acc + m))/(float len)
+    
+#time
+
+R.c(noseTipMeans.EnumerateRows() |> Seq.collect id |> Array.ofSeq |> Array.rev)
+|> grayScaleImage 21 21
+
 
 // Searching for keypoint
 let searchSize = 20
