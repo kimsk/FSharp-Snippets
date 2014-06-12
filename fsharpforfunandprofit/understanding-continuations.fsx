@@ -61,6 +61,30 @@ let y = 43
 let z = x + y
 // to CPS
 42 |> (fun x -> 
-    43 |> fun y -> 
-        x + y |> fun z -> z )
+  43 |> (fun y -> 
+    x + y |> (fun z -> 
+      z )))
+
+let pipeInto (someExpression, lambda) =
+  printfn "expression is %A" someExpression
+  someExpression |> lambda
+
+pipeInto (42, fun x -> 
+pipeInto (43, fun y -> 
+pipeInto (x+y, fun z -> 
+z)))
+
+(**
+  Similar to logger
+
+logger
+    {
+    let! x = 42
+    let! y = 43
+    let! z = x + y
+    return z
+    }
+
+*)
+
 
