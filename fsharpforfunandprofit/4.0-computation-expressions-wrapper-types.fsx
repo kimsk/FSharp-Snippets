@@ -1,7 +1,36 @@
 ﻿(**
-let! - unwrapper
-return - wrapped
+Maybe
 *)
+type MaybeBuilder() =
+  member this.Bind(m, f) = // Option.bind f m
+    match m with
+    | None -> None
+    | Some a -> f a
+
+
+  member this.Return(x) = Some x
+
+let maybe = new MaybeBuilder()
+
+let strToInt str = 
+  let ok, value = System.Int32.TryParse(str)
+  if ok 
+  then Some(value)
+  else None
+
+let result = 
+    maybe 
+        {
+        let! anInt = strToInt "10"  // expression of Option<int>
+        let! anInt2 = strToInt "20" // expression of Option<int>
+        return anInt + anInt2 
+        }    
+
+
+(**
+DbResult
+*)
+
 type DbResult<'a> = 
     | Success of 'a
     | Error of string
@@ -50,3 +79,33 @@ type DbResultBuilder() =
 
 let dbResult = new DbResultBuilder()
 
+let product' = 
+    dbResult {
+        let! custId = getCustomerId "Alice"
+        let! orderId = getLastOrderForCustomer custId
+        let! productId = getLastProductForOrder orderId 
+        printfn "Product is %s" productId
+        return productId
+        }
+printfn "%A" product'
+
+(**
+Every computation expression must have an associated wrapper type. 
+And the wrapper type is often designed specifically to go hand-in-hand with the workflow that we want to manage.
+*)
+
+
+(**
+let! - The let! has "unwrapped" the option before binding it to the value.
+
+  member Bind : M<'T> * ('T -> M<'U>) -> M<'U>
+
+
+return -  the return has "wrapped" the raw value back into an option.
+  
+  member Return : 'T -> M<'T>
+
+return! - return "wrapped" value as is.
+  member ReturnFrom : M<'T> -> M<'T>
+
+*)
