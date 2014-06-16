@@ -100,10 +100,16 @@ let! - The let! has "unwrapped" the option before binding it to the value.
 
   member Bind : M<'T> * ('T -> M<'U>) -> M<'U>
 
+  - Take a wrapped value
+  - Unwrapped (usually with pattern matching) and could apply a (continuation) function to it
+  - Return wrapped value
+
 
 return -  the return has "wrapped" the raw value back into an option.
   
   member Return : 'T -> M<'T>
+
+  - The output of Return can be fed to the input of a Bind
 
 return! - return "wrapped" value as is.
   member ReturnFrom : M<'T> -> M<'T>
