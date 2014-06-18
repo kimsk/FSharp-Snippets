@@ -1,0 +1,510 @@
+﻿<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
+        <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+        <link type="text/css" rel="stylesheet" href="fsharp.formatting\styles\style.css" />
+        <link type="text/css" rel="stylesheet" href="fsharp.formatting\styles\deedle.css" />
+        <script src="fsharp.formatting\styles\tips.js" type="text/javascript"></script>
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+
+        <div class="tip" id="fs1">Multiple items<br />type MeasureAttribute =<br />&#160;&#160;inherit Attribute<br />&#160;&#160;new : unit -&gt; MeasureAttribute<br /><br />Full name: Microsoft.FSharp.Core.MeasureAttribute<br /><br />--------------------<br />new : unit -&gt; MeasureAttribute</div>
+        <div class="tip" id="fs2">[&lt;Measure&gt;]<br />type sqft<br /><br />Full name: 03-ScatterPlots.sqft</div>
+        <div class="tip" id="fs3">[&lt;Measure&gt;]<br />type dollar<br /><br />Full name: 03-ScatterPlots.dollar</div>
+        <div class="tip" id="fs4">val sizes : int&lt;sqft&gt; list<br /><br />Full name: 03-ScatterPlots.sizes</div>
+        <div class="tip" id="fs5">val prices1 : int&lt;dollar&gt; list<br /><br />Full name: 03-ScatterPlots.prices1</div>
+        <div class="tip" id="fs6">namespace Deedle</div>
+        <div class="tip" id="fs7">val df1 : Frame&lt;int,string&gt;<br /><br />Full name: 03-ScatterPlots.df1</div>
+        <div class="tip" id="fs8">Multiple items<br />module Frame<br /><br />from Deedle<br /><br />--------------------<br />type Frame =<br />&#160;&#160;static member CreateEmpty : unit -&gt; Frame&lt;&#39;R,&#39;C&gt; (requires equality and equality)<br />&#160;&#160;static member FromArray2D : array:&#39;T [,] -&gt; Frame&lt;int,int&gt;<br />&#160;&#160;static member FromColumns : cols:Series&lt;&#39;TColKey,Series&lt;&#39;TRowKey,&#39;V&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : cols:Series&lt;&#39;TColKey,ObjectSeries&lt;&#39;TRowKey&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : columns:seq&lt;KeyValuePair&lt;&#39;ColKey,ObjectSeries&lt;&#39;RowKey&gt;&gt;&gt; -&gt; Frame&lt;&#39;RowKey,&#39;ColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : columns:seq&lt;KeyValuePair&lt;&#39;ColKey,Series&lt;&#39;RowKey,&#39;V&gt;&gt;&gt; -&gt; Frame&lt;&#39;RowKey,&#39;ColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : rows:seq&lt;Series&lt;&#39;ColKey,&#39;V&gt;&gt; -&gt; Frame&lt;&#39;ColKey,int&gt; (requires equality)<br />&#160;&#160;static member FromRecords : values:seq&lt;&#39;T&gt; -&gt; Frame&lt;int,string&gt;<br />&#160;&#160;static member FromRecords : series:Series&lt;&#39;K,&#39;R&gt; -&gt; Frame&lt;&#39;K,string&gt; (requires equality)<br />&#160;&#160;static member FromRowKeys : keys:seq&lt;&#39;K&gt; -&gt; Frame&lt;&#39;K,string&gt; (requires equality)<br />&#160;&#160;...<br /><br />Full name: Deedle.Frame<br /><br />--------------------<br />type Frame&lt;&#39;TRowKey,&#39;TColumnKey (requires equality and equality)&gt; =<br />&#160;&#160;interface IDynamicMetaObjectProvider<br />&#160;&#160;interface INotifyCollectionChanged<br />&#160;&#160;interface IFsiFormattable<br />&#160;&#160;interface IFrame<br />&#160;&#160;new : names:seq&lt;&#39;TColumnKey&gt; * columns:seq&lt;ISeries&lt;&#39;TRowKey&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColumnKey&gt;<br />&#160;&#160;private new : rowIndex:IIndex&lt;&#39;TRowKey&gt; * columnIndex:IIndex&lt;&#39;TColumnKey&gt; * data:IVector&lt;IVector&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColumnKey&gt;<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:ISeries&lt;&#39;TRowKey&gt; -&gt; unit<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:seq&lt;&#39;V&gt; -&gt; unit<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:ISeries&lt;&#39;TRowKey&gt; * lookup:Lookup -&gt; unit<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:seq&lt;&#39;V&gt; * lookup:Lookup -&gt; unit<br />&#160;&#160;...<br /><br />Full name: Deedle.Frame&lt;_,_&gt;<br /><br />--------------------<br />new : names:seq&lt;&#39;TColumnKey&gt; * columns:seq&lt;ISeries&lt;&#39;TRowKey&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColumnKey&gt;</div>
+        <div class="tip" id="fs9">Multiple items<br />module Series<br /><br />from Deedle<br /><br />--------------------<br />type Series =<br />&#160;&#160;static member ofNullables : values:seq&lt;Nullable&lt;&#39;a0&gt;&gt; -&gt; Series&lt;int,&#39;a0&gt; (requires default constructor and value type and &#39;a0 :&gt; ValueType)<br />&#160;&#160;static member ofObservations : observations:seq&lt;&#39;a0 * &#39;a1&gt; -&gt; Series&lt;&#39;a0,&#39;a1&gt; (requires equality)<br />&#160;&#160;static member ofOptionalObservations : observations:seq&lt;&#39;K * &#39;a1 option&gt; -&gt; Series&lt;&#39;K,&#39;a1&gt; (requires equality)<br />&#160;&#160;static member ofValues : values:seq&lt;&#39;a0&gt; -&gt; Series&lt;int,&#39;a0&gt;<br /><br />Full name: Deedle.FSharpSeriesExtensions.Series<br /><br />--------------------<br />type Series&lt;&#39;K,&#39;V (requires equality)&gt; =<br />&#160;&#160;interface IFsiFormattable<br />&#160;&#160;interface ISeries&lt;&#39;K&gt;<br />&#160;&#160;new : pairs:seq&lt;KeyValuePair&lt;&#39;K,&#39;V&gt;&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;new : keys:seq&lt;&#39;K&gt; * values:seq&lt;&#39;V&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;new : index:IIndex&lt;&#39;K&gt; * vector:IVector&lt;&#39;V&gt; * vectorBuilder:IVectorBuilder * indexBuilder:IIndexBuilder -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;member After : lowerExclusive:&#39;K -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;member Aggregate : aggregation:Aggregation&lt;&#39;K&gt; * observationSelector:Func&lt;DataSegment&lt;Series&lt;&#39;K,&#39;V&gt;&gt;,KeyValuePair&lt;&#39;TNewKey,OptionalValue&lt;&#39;R&gt;&gt;&gt; -&gt; Series&lt;&#39;TNewKey,&#39;R&gt; (requires equality)<br />&#160;&#160;member Aggregate : aggregation:Aggregation&lt;&#39;K&gt; * keySelector:Func&lt;DataSegment&lt;Series&lt;&#39;K,&#39;V&gt;&gt;,&#39;TNewKey&gt; * valueSelector:Func&lt;DataSegment&lt;Series&lt;&#39;K,&#39;V&gt;&gt;,OptionalValue&lt;&#39;R&gt;&gt; -&gt; Series&lt;&#39;TNewKey,&#39;R&gt; (requires equality)<br />&#160;&#160;member AsyncMaterialize : unit -&gt; Async&lt;Series&lt;&#39;K,&#39;V&gt;&gt;<br />&#160;&#160;member Before : upperExclusive:&#39;K -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;...<br /><br />Full name: Deedle.Series&lt;_,_&gt;<br /><br />--------------------<br />new : pairs:seq&lt;System.Collections.Generic.KeyValuePair&lt;&#39;K,&#39;V&gt;&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />new : keys:seq&lt;&#39;K&gt; * values:seq&lt;&#39;V&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />new : index:Indices.IIndex&lt;&#39;K&gt; * vector:IVector&lt;&#39;V&gt; * vectorBuilder:Vectors.IVectorBuilder * indexBuilder:Indices.IIndexBuilder -&gt; Series&lt;&#39;K,&#39;V&gt;</div>
+        <div class="tip" id="fs10">static member Series.ofValues : values:seq&lt;&#39;a0&gt; -&gt; Series&lt;int,&#39;a0&gt;</div>
+        <div class="tip" id="fs11">namespace FSharp</div>
+        <div class="tip" id="fs12">namespace FSharp.Charting</div>
+        <div class="tip" id="fs13">type Chart =<br />&#160;&#160;static member Area : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member Area : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member Bar : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member Bar : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member BoxPlotFromData : data:seq&lt;#key * #seq&lt;&#39;a2&gt;&gt; * ?Name:string * ?Title:string * ?Color:Color * ?XTitle:string * ?YTitle:string * ?Percentile:int * ?ShowAverage:bool * ?ShowMedian:bool * ?ShowUnusualValues:bool * ?WhiskerPercentile:int -&gt; GenericChart (requires &#39;a2 :&gt; value)<br />&#160;&#160;static member BoxPlotFromStatistics : data:seq&lt;#key * #value * #value * #value * #value * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string * ?Percentile:int * ?ShowAverage:bool * ?ShowMedian:bool * ?ShowUnusualValues:bool * ?WhiskerPercentile:int -&gt; GenericChart<br />&#160;&#160;static member Bubble : data:seq&lt;#value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string * ?BubbleMaxSize:int * ?BubbleMinSize:int * ?BubbleScaleMax:float * ?BubbleScaleMin:float * ?UseSizeForLabel:bool -&gt; GenericChart<br />&#160;&#160;static member Bubble : data:seq&lt;#key * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string * ?BubbleMaxSize:int * ?BubbleMinSize:int * ?BubbleScaleMax:float * ?BubbleScaleMin:float * ?UseSizeForLabel:bool -&gt; GenericChart<br />&#160;&#160;static member Candlestick : data:seq&lt;#value * #value * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; CandlestickChart<br />&#160;&#160;static member Candlestick : data:seq&lt;#key * #value * #value * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; CandlestickChart<br />&#160;&#160;...<br /><br />Full name: FSharp.Charting.Chart</div>
+        <div class="tip" id="fs14">static member Chart.Point : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string * ?MarkerColor:System.Drawing.Color * ?MarkerSize:int -&gt; ChartTypes.GenericChart<br />static member Chart.Point : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string * ?MarkerColor:System.Drawing.Color * ?MarkerSize:int -&gt; ChartTypes.GenericChart</div>
+        <div class="tip" id="fs15">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+        <div class="tip" id="fs16">val zip : source1:seq&lt;&#39;T1&gt; -&gt; source2:seq&lt;&#39;T2&gt; -&gt; seq&lt;&#39;T1 * &#39;T2&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.zip</div>
+        <div class="tip" id="fs17">val pricePerSqrft1 : int&lt;dollar/sqft&gt;<br /><br />Full name: 03-ScatterPlots.pricePerSqrft1</div>
+        <div class="tip" id="fs18">val sum : source:seq&lt;&#39;T&gt; -&gt; &#39;T (requires member ( + ) and member get_Zero)<br /><br />Full name: Microsoft.FSharp.Collections.Seq.sum</div>
+        <div class="tip" id="fs19">val prices2 : int&lt;dollar&gt; list<br /><br />Full name: 03-ScatterPlots.prices2</div>
+        <div class="tip" id="fs20">val df2 : Frame&lt;int,string&gt;<br /><br />Full name: 03-ScatterPlots.df2</div>
+        <div class="tip" id="fs21">val pricePerSqrft2 : float<br /><br />Full name: 03-ScatterPlots.pricePerSqrft2</div>
+        <div class="tip" id="fs22">Multiple items<br />val float : value:&#39;T -&gt; float (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.float<br /><br />--------------------<br />type float = System.Double<br /><br />Full name: Microsoft.FSharp.Core.float<br /><br />--------------------<br />type float&lt;&#39;Measure&gt; = float<br /><br />Full name: Microsoft.FSharp.Core.float&lt;_&gt;</div>
+        <div class="tip" id="fs23">val firstHome : float&lt;sqft&gt;<br /><br />Full name: 03-ScatterPlots.firstHome</div>
+        <div class="tip" id="fs24">val prices3 : int&lt;dollar&gt; list<br /><br />Full name: 03-ScatterPlots.prices3</div>
+        <div class="tip" id="fs25">val df3 : Frame&lt;int,string&gt;<br /><br />Full name: 03-ScatterPlots.df3</div>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section>
+                    <h1>Test</h1>
+                    F# code for <a href="https://www.udacity.com/course/viewer#!/c-st101/l-48646867">Scatter Plots</a> unit.
+                    <table class="pre">
+                        <tr>
+                            <td class="lines">
+                                <pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre>
+                            </td>
+                            <td class="snippet">
+                                <pre class="fssnip">
+[&lt;<span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Measure</span>&gt;] <span class="k">type</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">sqft</span>
+[&lt;<span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">Measure</span>&gt;] <span class="k">type</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">dollar</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="i">sizes</span> <span class="o">=</span> [<span class="n">1700</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">2100</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">1900</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 8)" onmouseover="showTip(event, 'fs2', 8)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">1300</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">1600</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">2200</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="i">sqft</span>&gt;]
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 12)" onmouseover="showTip(event, 'fs5', 12)" class="i">prices1</span> <span class="o">=</span> [<span class="n">51000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs3', 13)" onmouseover="showTip(event, 'fs3', 13)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">63000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs3', 14)" onmouseover="showTip(event, 'fs3', 14)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">57000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs3', 15)" onmouseover="showTip(event, 'fs3', 15)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">39000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs3', 16)" onmouseover="showTip(event, 'fs3', 16)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">48000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs3', 17)" onmouseover="showTip(event, 'fs3', 17)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">66000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs3', 18)" onmouseover="showTip(event, 'fs3', 18)" class="i">dollar</span>&gt;]
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs6', 19)" onmouseover="showTip(event, 'fs6', 19)" class="i">Deedle</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs7', 20)" onmouseover="showTip(event, 'fs7', 20)" class="i">df1</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs8', 21)" onmouseover="showTip(event, 'fs8', 21)" class="i">Frame</span>([<span class="s">&quot;</span><span class="s">size</span><span class="s">&quot;</span>; <span class="s">&quot;</span><span class="s">price</span><span class="s">&quot;</span>], [ <span onmouseout="hideTip(event, 'fs9', 22)" onmouseover="showTip(event, 'fs9', 22)" class="i">Series</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 23)" onmouseover="showTip(event, 'fs10', 23)" class="i">ofValues</span> <span onmouseout="hideTip(event, 'fs4', 24)" onmouseover="showTip(event, 'fs4', 24)" class="i">sizes</span>; <span onmouseout="hideTip(event, 'fs9', 25)" onmouseover="showTip(event, 'fs9', 25)" class="i">Series</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 26)" onmouseover="showTip(event, 'fs10', 26)" class="i">ofValues</span> <span onmouseout="hideTip(event, 'fs5', 27)" onmouseover="showTip(event, 'fs5', 27)" class="i">prices1</span>])</pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <h1>Title</h1>
+                    <pre><code>
+                        let sqr x = x * x
+                        let y = sqr 10
+                        </code></pre>
+
+                    <ul>
+                        <li>very simple <strong>F#</strong> code</li>
+                        <li>
+                            tooltip should work
+                            <ul>
+                                <li>show all <code>types</code></li>
+                                <li>and so on</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>Title</h1>
+
+                    <table class="pre">
+                        <tr>
+                            <td class="lines">
+                                <pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+</pre>
+                            </td>
+                            <td class="snippet">
+                                <pre class="fssnip">
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">sqr</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">x</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="i">x</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="i">x</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="i">y</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">sqr</span> <span class="n">10</span></pre>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <ul>
+                        <li>very simple <strong>F#</strong> code</li>
+                        <li>
+                            tooltip should work
+                            <ul>
+                                <li>show all <code>types</code></li>
+                                <li>and so on</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="tip" id="fs1">val sqr : x:int -&gt; int<br /><br />Full name: Document.sqr</div>
+                    <div class="tip" id="fs2">val x : int</div>
+                    <div class="tip" id="fs3">val y : int<br /><br />Full name: Document.y</div>
+                </section>
+				<!--<section>
+					<h1>Reveal.js</h1>
+					<h3>HTML Presentations Made Easy</h3>
+					<p>
+						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+					</p>
+				</section>-->
+
+				<section>
+					<h2>Heads Up</h2>
+					<p>
+						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
+						support for CSS 3D transforms to see it in its full glory.
+					</p>
+
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>Vertical Slides</h2>
+						<p>
+							Slides can be nested inside of other slides,
+							try pressing <a href="#" class="navigate-down">down</a>.
+						</p>
+						<a href="#" class="image navigate-down">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section>
+						<h2>Basement Level 1</h2>
+						<p>Press down or up to navigate.</p>
+					</section>
+					<section>
+						<h2>Basement Level 2</h2>
+						<p>Cornify</p>
+						<a class="test" href="http://cornify.com">
+							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
+						</a>
+					</section>
+					<section>
+						<h2>Basement Level 3</h2>
+						<p>That's it, time to go back up.</p>
+						<a href="#/2" class="image">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
+						</a>
+					</section>
+				</section>
+
+				<section>
+					<h2>Slides</h2>
+					<p>
+						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Point of View</h2>
+					<p>
+						Press <strong>ESC</strong> to enter the slide overview.
+					</p>
+					<p>
+						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
+					</p>
+				</section>
+
+				<section>
+					<h2>Works in Mobile Safari</h2>
+					<p>
+						Try it out! You can swipe through the slides and pinch your way to the overview.
+					</p>
+				</section>
+
+				<section>
+					<h2>Marvelous Unordered List</h2>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Fantastic Ordered List</h2>
+					<ol>
+						<li>One is smaller than...</li>
+						<li>Two is smaller than...</li>
+						<li>Three!</li>
+					</ol>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Markdown support
+
+						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+
+						```
+						<section data-markdown>
+						  ## Markdown support
+
+						  For those of you who like that sort of thing.
+						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+						</section>
+						```
+					</script>
+				</section>
+
+				<section id="transitions">
+					<h2>Transition Styles</h2>
+					<p>
+						You can select from different transitions, like: <br>
+						<a href="?transition=cube#/transitions">Cube</a> -
+						<a href="?transition=page#/transitions">Page</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a> -
+						<a href="?transition=linear#/transitions">Linear</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?#/transitions">Default</a>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h2>Themes</h2>
+					<p>
+						Reveal.js comes with a few themes built in: <br>
+						<a href="?#/themes">Default</a> -
+						<a href="?theme=sky#/themes">Sky</a> -
+						<a href="?theme=beige#/themes">Beige</a> -
+						<a href="?theme=simple#/themes">Simple</a> -
+						<a href="?theme=serif#/themes">Serif</a> -
+						<a href="?theme=night#/themes">Night</a> <br>
+						<a href="?theme=moon#/themes">Moon</a> -
+						<a href="?theme=solarized#/themes">Solarized</a>
+					</p>
+					<p>
+						<small>
+							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
+						</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Global State</h2>
+					<p>
+						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
+						will be added as a class to the document element when the slide is open. This lets you
+						apply broader style changes, like switching the background.
+					</p>
+				</section>
+
+				<section data-state="customevent">
+					<h2>Custom Events</h2>
+					<p>
+						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+					</p>
+					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+Reveal.addEventListener( 'customevent', function() {
+	console.log( '"customevent" has fired' );
+} );
+					</code></pre>
+				</section>
+
+				<section>
+					<section data-background="#007777">
+						<h2>Slide Backgrounds</h2>
+						<p>
+							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
+						</p>
+						<a href="#" class="image navigate-down">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
+						<h2>Image Backgrounds</h2>
+						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
+					</section>
+					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
+						<h2>Repeated Image Backgrounds</h2>
+						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
+					</section>
+				</section>
+
+				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
+					<h2>Background Transitions</h2>
+					<p>
+						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
+					</p>
+				</section>
+
+				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
+					<h2>Background Transition Override</h2>
+					<p>
+						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Clever Quotes</h2>
+					<p>
+						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
+					</p>
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
+						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+					</blockquote>
+				</section>
+
+				<section>
+					<h2>Pretty Code</h2>
+					<pre><code data-trim contenteditable>
+function linkify( selector ) {
+  if( supports3DTransforms ) {
+
+    var nodes = document.querySelectorAll( selector );
+
+    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
+      var node = nodes[i];
+
+      if( !node.className ) {
+        node.className += ' roll';
+      }
+    }
+  }
+}
+					</code></pre>
+					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+				</section>
+
+				<section>
+					<h2>Intergalactic Interconnections</h2>
+					<p>
+						You can link between slides internally,
+						<a href="#/2/3">like this</a>.
+					</p>
+				</section>
+
+				<section>
+					<section id="fragments">
+						<h2>Fragmented Views</h2>
+						<p>Hit the next arrow...</p>
+						<p class="fragment">... to step through ...</p>
+						<ol>
+							<li class="fragment"><code>any type</code></li>
+							<li class="fragment"><em>of view</em></li>
+							<li class="fragment"><strong>fragments</strong></li>
+						</ol>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+					</section>
+					<section>
+						<h2>Fragment Styles</h2>
+						<p>There's a few styles of fragments, like:</p>
+						<p class="fragment grow">grow</p>
+						<p class="fragment shrink">shrink</p>
+						<p class="fragment roll-in">roll-in</p>
+						<p class="fragment fade-out">fade-out</p>
+						<p class="fragment highlight-red">highlight-red</p>
+						<p class="fragment highlight-green">highlight-green</p>
+						<p class="fragment highlight-blue">highlight-blue</p>
+						<p class="fragment current-visible">current-visible</p>
+						<p class="fragment highlight-current-blue">highlight-current-blue</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Spectacular image!</h2>
+					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
+						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
+					</a>
+				</section>
+
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
+					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
+					<script>
+						document.getElementById('slideshare').attributeName = 'allowfullscreen';
+					</script>
+				</section>
+
+				<section>
+					<h2>Take a Moment</h2>
+					<p>
+						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
+						during a presentation.
+					</p>
+				</section>
+
+				<section>
+					<h2>Stellar Links</h2>
+					<ul>
+						<li><a href="http://slid.es">Try the online editor</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
+						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>THE END</h1>
+					<h3>BY Hakim El Hattab / hakim.se</h3>
+				</section>
+
+			</div>
+
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
