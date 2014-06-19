@@ -1,7 +1,7 @@
 ﻿#I "../packages/FSharp.Formatting.2.4.10/lib/net40/"
 #I "../packages/RazorEngine.3.3.0/lib/net40"
 #I "../packages/FSharp.Compiler.Service.0.0.44/lib/net40"
-#r "FSharp.Literate.dll"
+#r @"G:\GitHub\FSharp.Formatting\bin\FSharp.Literate.dll"
 #r "FSharp.CodeFormat.dll"
 #r "FSharp.MetadataFormat.dll"
 #r "FSharp.Markdown.dll"
@@ -39,6 +39,7 @@ let codeMd = """
     let x = 10
     let y = 20
 """
+
 
 let formattingContext templateFile format prefix lineNumbers includeSource replacements layoutRoots =
     { TemplateFile = templateFile 
@@ -110,8 +111,50 @@ let replaceLiterateParagraphs ctx (doc:LiterateDocument) =
 let ctx = formattingContext None (Some OutputKind.Html) None None None None None
 
 
+
+
 let doc = codeMd |> Literate.ParseMarkdownString
 let doc = md |> Literate.ParseMarkdownString
 let doc' = replaceLiterateParagraphs ctx doc
 printfn "%A" doc.Paragraphs
 printfn "%A" doc'.Paragraphs
+
+let fsx ="""
+(**
+## F# syntax in 60 seconds
+
+### The two major differences between F# syntax and a standard C-like syntax are:
+
+- Curly braces are not used to delimit blocks of code. Instead, indentation is used (Python is similar this way).
+- Whitespace is used to separate parameters rather than commas.
+*)
+// The "let" keyword defines an (immutable) value
+let myInt = 5
+let myFloat = 3.14
+let myString = "hello"   //note that no types needed
+
+// ======== Lists ============
+let twoToFive = [2;3;4;5]        // Square brackets create a list with
+                                 // semicolon delimiters.
+let oneToFive = 1 :: twoToFive   // :: creates list with new 1st element
+// The result is [1;2;3;4;5]
+let zeroToFive = [0;1] @ twoToFive   // @ concats two lists
+"""
+let slides = fsx  |> Literate.ParseScriptString
+
+
+let replacements = Seq.collect collectCodes slides.Paragraphs
+let snippets = [| for _, r in replacements -> Snippet("", r) |]       
+let formatted = CodeFormat.FormatHtml(snippets, ctx.Prefix, ctx.GenerateLineNumbers, false)    
+
+let tips = formatted.ToolTip
+
+let slides' = replaceLiterateParagraphs ctx slides 
+Markdown.WriteHtml(MarkdownDocument(slides'.Paragraphs, slides'.DefinedLinks))
+
+let html = slides |> Literate.WriteHtmlWithoutFormattedTips
+
+
+fsx 
+|> Literate.ParseScriptString
+|> Literate.WriteHtml

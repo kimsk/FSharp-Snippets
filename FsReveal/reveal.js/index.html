@@ -46,16 +46,60 @@
 		<![endif]-->
 	</head>
 
-<body>
-    <div class="tip" id="fs1">val x : int<br /><br />Full name: Document.x</div>
-    <div class="tip" id="fs2">val sqr : x:int -&gt; int<br /><br />Full name: Document.sqr</div>
-    <div class="tip" id="fs3">val x : int</div>
-    <div class="tip" id="fs4">val y : int<br /><br />Full name: Document.y</div>
+<body>    
     <div class="reveal">
-
+        <div class="tip" id="fs1">val myInt : int<br /><br />Full name: Document.myInt</div>
+        <div class="tip" id="fs2">val myFloat : float<br /><br />Full name: Document.myFloat</div>
+        <div class="tip" id="fs3">val myString : string<br /><br />Full name: Document.myString</div>
+        <div class="tip" id="fs4">val twoToFive : int list<br /><br />Full name: Document.twoToFive</div>
+        <div class="tip" id="fs5">val oneToFive : int list<br /><br />Full name: Document.oneToFive</div>
+        <div class="tip" id="fs6">val zeroToFive : int list<br /><br />Full name: Document.zeroToFive</div>
         <!-- Any section element inside of this container is displayed as a slide -->
         <div class="slides">
             <section>
+                <h2>F# syntax in 60 seconds</h2>
+
+                <h3>The two major differences between F# syntax and a standard C-like syntax are:</h3>
+
+                <ul>
+                    <li class="fragment">Curly braces are not used to delimit blocks of code. Instead, indentation is used (Python is similar this way).</li>
+                    <li class="fragment">Whitespace is used to separate parameters rather than commas.</li>
+                </ul>
+
+                <table class="pre fragment">
+                    <tr>
+                        <td class="lines">
+                            <pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre>
+                        </td>
+                        <td class="snippet">
+                            <pre class="fssnip">
+<span class="c">// The &quot;let&quot; keyword defines an (immutable) value</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">myInt</span> <span class="o">=</span> <span class="n">5</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">myFloat</span> <span class="o">=</span> <span class="n">3.14</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">myString</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">hello</span><span class="s">&quot;</span>   <span class="c">//note that no types needed</span>
+<span class="c">// ======== Lists ============</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">twoToFive</span> <span class="o">=</span> [<span class="n">2</span>;<span class="n">3</span>;<span class="n">4</span>;<span class="n">5</span>]        <span class="c">// Square brackets create a list with</span>
+                            <span class="c">// semicolon delimiters.</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">oneToFive</span> <span class="o">=</span> <span class="n">1</span> <span class="o">::</span> <span onmouseout="hideTip(event, 'fs4', 6)" onmouseover="showTip(event, 'fs4', 6)" class="i">twoToFive</span>   <span class="c">// :: creates list with new 1st element</span>
+<span class="c">// The result is [1;2;3;4;5]</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="i">zeroToFive</span> <span class="o">=</span> [<span class="n">0</span>;<span class="n">1</span>] <span class="o">@</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="i">twoToFive</span>   <span class="c">// @ concats two lists</span></pre>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <!--<section>
                 <h2>F# Code</h2>
                 <table class="pre">
                     <tr>
@@ -80,7 +124,7 @@
                     <li>Or here</li>
                     <li>Or here</li>
                 </ul>
-            </section>
+            </section>-->
             <section>
                 <h1>Reveal.js</h1>
                 <h3>HTML Presentations Made Easy</h3>
@@ -286,8 +330,8 @@ Reveal.addEventListener( 'customevent', function() {
                 <h2>Clever Quotes</h2>
                 <p>
                     These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-                        &ldquo;The nice thing about standards is that there are so many to choose from&rdquo;
-                    </q> and block:
+                                                              &ldquo;The nice thing about standards is that there are so many to choose from&rdquo;
+                                                          </q> and block:
                 </p>
                 <blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
                     &ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would

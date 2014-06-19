@@ -79,6 +79,7 @@
     <None Include="packages.config" />
     <None Include="app.config" />
     <None Include="Script.fsx" />
+    <None Include="slides.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

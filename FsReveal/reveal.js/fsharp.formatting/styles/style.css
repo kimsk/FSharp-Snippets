@@ -36,11 +36,12 @@ span.omitted {
 /* tool tip */
 div.tip {
 	background:#475b5f;
-  border-radius:4px;
-  font:11pt 'Droid Sans', arial, sans-serif;
+    border-radius:4px;
+    font:11pt 'Droid Sans', arial, sans-serif;
 	padding:6px 8px 6px 8px;
 	display:none;
-  color:#d1d1d1;
+    color:#d1d1d1;
+    z-index: 2;
 }
 table.pre pre {
   padding:0px;
