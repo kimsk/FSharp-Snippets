@@ -43,6 +43,14 @@ let doc =
 let doc = (md |> Literate.ParseMarkdownString)
 let paragraphs = (md |> Literate.ParseMarkdownString).Paragraphs
 
+
+
+let doc = codeMd |> Literate.ParseMarkdownString
+let doc = md |> Literate.ParseMarkdownString
+let doc' = replaceLiterateParagraphs ctx doc
+printfn "%A" doc.Paragraphs
+printfn "%A" doc'.Paragraphs
+
 paragraphs.[1]
 paragraphs.[2]
 
