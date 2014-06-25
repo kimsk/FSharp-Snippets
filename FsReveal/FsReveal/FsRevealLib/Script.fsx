@@ -1,6 +1,6 @@
 ﻿//#I "../packages/FSharp.Formatting.2.4.10/lib/net40/"
-//#I @"C:\Users\Karlkim\Documents\GitHub\FSharp.Formatting\bin"
-#I @"G:\GitHub\FSharp.Formatting\bin"
+#I @"C:\Users\Karlkim\Documents\GitHub\FSharp.Formatting\bin"
+//#I @"G:\GitHub\FSharp.Formatting\bin"
 #r "FSharp.Literate.dll"
 #r "FSharp.CodeFormat.dll"
 #r "FSharp.MetadataFormat.dll"
@@ -66,11 +66,22 @@ let sequence = seq {1..10}
 (*** slide-end ***)
 """
 
+
+
+
+
+
+let processScriptFile fsx =
+  let slides,tooltips =FsReveal.GetHtmlWithoutFormattedTips(fsx, "FsReveal", false)
+  let relative subdir = Path.Combine(__SOURCE_DIRECTORY__, subdir)
+  let template = File.ReadAllText (relative "template.html")
+
+  let output = template.Replace("{tooltips}", tooltips).Replace("{slides}", slides)
+
+  File.WriteAllText (Path.Combine(@"C:\temp\FsReveal-Output", "index.html"), output)
+
+
+File.ReadAllText(Path.Combine(@"C:\temp\FsReveal-Input", "script2.fsx"))
+|> processScriptFile
+
 let slides,tooltips = fsx |> FsReveal.GetHtmlWithoutFormattedTips
-
-let relative subdir = Path.Combine(__SOURCE_DIRECTORY__, subdir)
-
-let template = File.ReadAllText (relative "template.html")
-
-let output = 
-  template.Replace("{tooltips}", tooltips).Replace("{slides}", slides)
