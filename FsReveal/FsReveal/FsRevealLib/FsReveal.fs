@@ -1,4 +1,4 @@
-﻿namespace FsRevealLib
+﻿namespace FsReveal
 
 open FSharp.Literate
 open FSharp.Markdown
@@ -8,9 +8,11 @@ open CSharpFormat
 open System
 open System.IO
 open System.Web
+open System.Text.RegularExpressions
+open System.Text
+
 
 type FsReveal() =
-  
   static let formattingContext templateFile format prefix lineNumbers includeSource replacements layoutRoots =
     { TemplateFile = templateFile 
       Replacements = defaultArg replacements []
@@ -78,14 +80,47 @@ type FsReveal() =
     let newParagraphs = List.choose (replaceSpecialCodes ctx lookup) doc.Paragraphs
     doc.With(paragraphs = newParagraphs, formattedTips = formatted.ToolTip)
 
+  static let processConfigs (fsx:string) =
+    let regex =     
+      Regex("^\(\*\@(?<name>[^=]*)=(?<value>[^\@]*)\@\*\)$", RegexOptions.Singleline)
+
+    let lines = fsx.Split([|'\r';'\n'|], StringSplitOptions.RemoveEmptyEntries)
+
+    let configs, processedLines =  
+      lines
+      |> List.ofArray
+      |> List.fold (fun acc l -> 
+        let configs, processedLines = acc
+        let m = regex.Match l
+        if m.Success then
+          let name = m.Groups.["name"].Value.Trim()
+          let value = m.Groups.["value"].Value.Trim()
+          ((name,value)::configs, processedLines)
+        else
+          (configs, l::processedLines)
+      ) ([],[])
+
+    (configs, (processedLines |> List.fold (fun acc l -> l + "\r\n" + acc) "") )
+
   static member ProcessScriptFile outDir fsx =
+    let configs, fsx = processConfigs fsx
+
     let slides,tooltips =FsReveal.GetHtmlWithoutFormattedTips(fsx, "FsReveal", false)
     let relative subdir = Path.Combine(__SOURCE_DIRECTORY__, subdir)
-    let template = File.ReadAllText (relative "template.html")
+    let output = StringBuilder(File.ReadAllText (relative "template.html"))
+    
+    output
+      .Replace("{tooltips}", tooltips)
+      .Replace("{slides}", slides) |> ignore
+    
+    configs
+    |> List.iter (fun (k,v) -> 
+        let tag = sprintf "{%s}" k
+        output.Replace(tag, v) |> ignore
+      )
 
-    let output = template.Replace("{tooltips}", tooltips).Replace("{slides}", slides)
 
-    File.WriteAllText (Path.Combine(outDir, "index.html"), output)
+    File.WriteAllText (Path.Combine(outDir, "index.html"), output.ToString())
 
   static member GetHtmlWithoutFormattedTips(fsx, ?prefix, ?lineNumbers) =
     let doc = fsx |> Literate.ParseScriptString

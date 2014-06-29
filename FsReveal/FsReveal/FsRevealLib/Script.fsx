@@ -19,7 +19,7 @@ open CSharpFormat
 open System
 open System.IO
 open System.Web
-open FsRevealLib
+open FsReveal
 
 File.ReadAllText(Path.Combine(__SOURCE_DIRECTORY__, "fsreveal.fsx"))
 |> FsReveal.ProcessScriptFile @"G:\GitHub\FSharp-Snippets\FsReveal\reveal.js"
