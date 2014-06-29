@@ -4,10 +4,10 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>F#Reveal</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="description" content="Introduction to F#Reveal">
+		<meta name="author" content="Karlkim Suwanmongkol">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -117,7 +117,11 @@
 <li>F#Reveal parse markdown and F# code to reveal.js presentation</li>
 </ul>
 
+<hr />
+
 <h4>How about some F# code..</h4>
+
+<hr />
 
 <pre class="fssnip">
 <span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal1', 1)" onmouseover="showTip(event, 'FsReveal1', 1)" class="i">output</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'FsReveal2', 2)" onmouseover="showTip(event, 'FsReveal2', 2)" class="i">Markdown</span>, <span onmouseout="hideTip(event, 'FsReveal3', 3)" onmouseover="showTip(event, 'FsReveal3', 3)" class="i">``F# code``</span>) <span class="o">||&gt;</span> <span onmouseout="hideTip(event, 'FsReveal4', 4)" onmouseover="showTip(event, 'FsReveal4', 4)" class="i">FsReveal</span></pre>
@@ -203,8 +207,8 @@
             history: true,
             center: true,
 
-            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+            theme: 'sky', // available themes are in /css/theme
+            transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
 
             // Parallax scrolling
             // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',

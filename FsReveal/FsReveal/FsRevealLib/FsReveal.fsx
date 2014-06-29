@@ -1,4 +1,9 @@
-﻿(*** slide-start ***)
+﻿(*@ title = F#Reveal @*)
+(*@ description = Introduction to F#Reveal @*)
+(*@ author = Karlkim Suwanmongkol @*)
+(*@ theme = sky @*)
+(*@ transition = default @*)
+(*** slide-start ***)
 (**
 ***
 # F#Reveal
@@ -23,8 +28,9 @@ let FsReveal markdown fsharp =
 - [FSharp.Formatting](https://github.com/tpetricek/FSharp.Formatting) by _Tomas Petricek_
 - F#Reveal parse markdown and F# code to reveal.js presentation  
   
-  
+***
 #### How about some F# code..
+***
 *)
 
 let output = (Markdown, ``F# code``) ||> FsReveal
@@ -76,4 +82,3 @@ Need to think like a compiler to understand the code above..
 *)
 (*** slide-end ***)
 (*** slide-end ***)
-

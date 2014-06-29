@@ -77,6 +77,7 @@
     <None Include="slides.fsx" />
     <None Include="template.html" />
     <None Include="FsReveal.fsx" />
+    <None Include="TestConfigParserScript.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
