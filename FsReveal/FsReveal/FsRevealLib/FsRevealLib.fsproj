@@ -39,6 +39,12 @@
     <Reference Include="CSharpFormat">
       <HintPath>..\..\..\..\FSharp.Formatting\bin\CSharpFormat.dll</HintPath>
     </Reference>
+    <Reference Include="Deedle">
+      <HintPath>..\packages\Deedle.1.0.0\lib\net40\Deedle.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Charting">
+      <HintPath>..\packages\FSharp.Charting.0.90.6\lib\net40\FSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="FSharp.CodeFormat">
       <HintPath>..\..\..\..\FSharp.Formatting\bin\FSharp.CodeFormat.dll</HintPath>
     </Reference>
@@ -54,6 +60,12 @@
     <Reference Include="FSharp.MetadataFormat">
       <HintPath>..\..\..\..\FSharp.Formatting\bin\FSharp.MetadataFormat.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\packages\MathNet.Numerics.3.0.0-beta01\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.FSharp">
+      <HintPath>..\packages\MathNet.Numerics.FSharp.3.0.0-beta01\lib\net40\MathNet.Numerics.FSharp.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -61,15 +73,38 @@
     <Reference Include="RazorEngine">
       <HintPath>..\..\..\..\FSharp.Formatting\bin\RazorEngine.dll</HintPath>
     </Reference>
+    <Reference Include="RDotNet">
+      <HintPath>..\packages\R.NET.1.5.5\lib\net40\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.FSharp">
+      <HintPath>..\packages\RDotNet.FSharp.0.1.2.1\lib\net40\RDotNet.FSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary">
+      <HintPath>..\packages\R.NET.1.5.5\lib\net40\RDotNet.NativeLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="RProvider">
+      <HintPath>..\packages\RProvider.1.0.9\lib\RProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="RProvider.DesignTime">
+      <HintPath>..\packages\RProvider.1.0.9\lib\RProvider.DesignTime.dll</HintPath>
+    </Reference>
+    <Reference Include="RProvider.Runtime">
+      <HintPath>..\packages\RProvider.1.0.9\lib\RProvider.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Razor">
       <HintPath>..\..\..\..\FSharp.Formatting\bin\System.Web.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formatters.fs" />
     <Compile Include="FsReveal.fs" />
     <None Include="Copy of Script.fsx" />
     <None Include="app.config" />
