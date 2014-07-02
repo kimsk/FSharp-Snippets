@@ -1,5 +1,8 @@
 ﻿//#I "../packages/FSharp.Formatting.2.4.10/lib/net40/"
 //#I @"C:\Users\Karlkim\Documents\GitHub\FSharp.Formatting\bin"
+#I @"G:\GitHub\FSharp-Snippets\FsReveal\FsReveal"
+#load "packages/FsLab.0.0.14-beta/FsLab.fsx"
+
 #I @"G:\GitHub\FSharp.Formatting\bin"
 #r "FSharp.Literate.dll"
 #r "FSharp.CodeFormat.dll"
@@ -9,7 +12,10 @@
 #r "FSharp.Compiler.Service.dll"
 #r "CSharpFormat.dll"
 
+#load "Formatters.fs"
 #load "FsReveal.fs"
+
+
 
 open FSharp.Literate
 open FSharp.Markdown
