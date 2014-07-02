@@ -98,6 +98,26 @@
 <div class="tip" id="FsReveal48">val ( price per sqft ) : float []<br /><br />Full name: Document.( price per sqft )</div>
 <div class="tip" id="FsReveal49">module Array<br /><br />from Microsoft.FSharp.Collections</div>
 <div class="tip" id="FsReveal50">val map2 : mapping:(&#39;T1 -&gt; &#39;T2 -&gt; &#39;U) -&gt; array1:&#39;T1 [] -&gt; array2:&#39;T2 [] -&gt; &#39;U []<br /><br />Full name: Microsoft.FSharp.Collections.Array.map2</div>
+<div class="tip" id="FsReveal51">namespace Deedle</div>
+<div class="tip" id="FsReveal52">val df : Frame&lt;int,string&gt;<br /><br />Full name: Document.df</div>
+<div class="tip" id="FsReveal53">Multiple items<br />module Frame<br /><br />from Deedle<br /><br />--------------------<br />type Frame =<br />&#160;&#160;static member CreateEmpty : unit -&gt; Frame&lt;&#39;R,&#39;C&gt; (requires equality and equality)<br />&#160;&#160;static member FromArray2D : array:&#39;T [,] -&gt; Frame&lt;int,int&gt;<br />&#160;&#160;static member FromColumns : cols:Series&lt;&#39;TColKey,Series&lt;&#39;TRowKey,&#39;V&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : cols:Series&lt;&#39;TColKey,ObjectSeries&lt;&#39;TRowKey&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : columns:seq&lt;KeyValuePair&lt;&#39;ColKey,ObjectSeries&lt;&#39;RowKey&gt;&gt;&gt; -&gt; Frame&lt;&#39;RowKey,&#39;ColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : columns:seq&lt;KeyValuePair&lt;&#39;ColKey,Series&lt;&#39;RowKey,&#39;V&gt;&gt;&gt; -&gt; Frame&lt;&#39;RowKey,&#39;ColKey&gt; (requires equality and equality)<br />&#160;&#160;static member FromColumns : rows:seq&lt;Series&lt;&#39;ColKey,&#39;V&gt;&gt; -&gt; Frame&lt;&#39;ColKey,int&gt; (requires equality)<br />&#160;&#160;static member FromRecords : values:seq&lt;&#39;T&gt; -&gt; Frame&lt;int,string&gt;<br />&#160;&#160;static member FromRecords : series:Series&lt;&#39;K,&#39;R&gt; -&gt; Frame&lt;&#39;K,string&gt; (requires equality)<br />&#160;&#160;static member FromRowKeys : keys:seq&lt;&#39;K&gt; -&gt; Frame&lt;&#39;K,string&gt; (requires equality)<br />&#160;&#160;...<br /><br />Full name: Deedle.Frame<br /><br />--------------------<br />type Frame&lt;&#39;TRowKey,&#39;TColumnKey (requires equality and equality)&gt; =<br />&#160;&#160;interface IDynamicMetaObjectProvider<br />&#160;&#160;interface INotifyCollectionChanged<br />&#160;&#160;interface IFsiFormattable<br />&#160;&#160;interface IFrame<br />&#160;&#160;new : names:seq&lt;&#39;TColumnKey&gt; * columns:seq&lt;ISeries&lt;&#39;TRowKey&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColumnKey&gt;<br />&#160;&#160;private new : rowIndex:IIndex&lt;&#39;TRowKey&gt; * columnIndex:IIndex&lt;&#39;TColumnKey&gt; * data:IVector&lt;IVector&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColumnKey&gt;<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:ISeries&lt;&#39;TRowKey&gt; -&gt; unit<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:seq&lt;&#39;V&gt; -&gt; unit<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:ISeries&lt;&#39;TRowKey&gt; * lookup:Lookup -&gt; unit<br />&#160;&#160;member AddColumn : column:&#39;TColumnKey * series:seq&lt;&#39;V&gt; * lookup:Lookup -&gt; unit<br />&#160;&#160;...<br /><br />Full name: Deedle.Frame&lt;_,_&gt;<br /><br />--------------------<br />new : names:seq&lt;&#39;TColumnKey&gt; * columns:seq&lt;ISeries&lt;&#39;TRowKey&gt;&gt; -&gt; Frame&lt;&#39;TRowKey,&#39;TColumnKey&gt;</div>
+<div class="tip" id="FsReveal54">Multiple items<br />module Series<br /><br />from Deedle<br /><br />--------------------<br />type Series =<br />&#160;&#160;static member ofNullables : values:seq&lt;Nullable&lt;&#39;a0&gt;&gt; -&gt; Series&lt;int,&#39;a0&gt; (requires default constructor and value type and &#39;a0 :&gt; ValueType)<br />&#160;&#160;static member ofObservations : observations:seq&lt;&#39;a0 * &#39;a1&gt; -&gt; Series&lt;&#39;a0,&#39;a1&gt; (requires equality)<br />&#160;&#160;static member ofOptionalObservations : observations:seq&lt;&#39;K * &#39;a1 option&gt; -&gt; Series&lt;&#39;K,&#39;a1&gt; (requires equality)<br />&#160;&#160;static member ofValues : values:seq&lt;&#39;a0&gt; -&gt; Series&lt;int,&#39;a0&gt;<br /><br />Full name: Deedle.FSharpSeriesExtensions.Series<br /><br />--------------------<br />type Series&lt;&#39;K,&#39;V (requires equality)&gt; =<br />&#160;&#160;interface IFsiFormattable<br />&#160;&#160;interface ISeries&lt;&#39;K&gt;<br />&#160;&#160;new : pairs:seq&lt;KeyValuePair&lt;&#39;K,&#39;V&gt;&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;new : keys:seq&lt;&#39;K&gt; * values:seq&lt;&#39;V&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;new : index:IIndex&lt;&#39;K&gt; * vector:IVector&lt;&#39;V&gt; * vectorBuilder:IVectorBuilder * indexBuilder:IIndexBuilder -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;member After : lowerExclusive:&#39;K -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;member Aggregate : aggregation:Aggregation&lt;&#39;K&gt; * observationSelector:Func&lt;DataSegment&lt;Series&lt;&#39;K,&#39;V&gt;&gt;,KeyValuePair&lt;&#39;TNewKey,OptionalValue&lt;&#39;R&gt;&gt;&gt; -&gt; Series&lt;&#39;TNewKey,&#39;R&gt; (requires equality)<br />&#160;&#160;member Aggregate : aggregation:Aggregation&lt;&#39;K&gt; * keySelector:Func&lt;DataSegment&lt;Series&lt;&#39;K,&#39;V&gt;&gt;,&#39;TNewKey&gt; * valueSelector:Func&lt;DataSegment&lt;Series&lt;&#39;K,&#39;V&gt;&gt;,OptionalValue&lt;&#39;R&gt;&gt; -&gt; Series&lt;&#39;TNewKey,&#39;R&gt; (requires equality)<br />&#160;&#160;member AsyncMaterialize : unit -&gt; Async&lt;Series&lt;&#39;K,&#39;V&gt;&gt;<br />&#160;&#160;member Before : upperExclusive:&#39;K -&gt; Series&lt;&#39;K,&#39;V&gt;<br />&#160;&#160;...<br /><br />Full name: Deedle.Series&lt;_,_&gt;<br /><br />--------------------<br />new : pairs:seq&lt;System.Collections.Generic.KeyValuePair&lt;&#39;K,&#39;V&gt;&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />new : keys:seq&lt;&#39;K&gt; * values:seq&lt;&#39;V&gt; -&gt; Series&lt;&#39;K,&#39;V&gt;<br />new : index:Indices.IIndex&lt;&#39;K&gt; * vector:IVector&lt;&#39;V&gt; * vectorBuilder:Vectors.IVectorBuilder * indexBuilder:Indices.IIndexBuilder -&gt; Series&lt;&#39;K,&#39;V&gt;</div>
+<div class="tip" id="FsReveal55">static member Series.ofValues : values:seq&lt;&#39;a0&gt; -&gt; Series&lt;int,&#39;a0&gt;</div>
+<div class="tip" id="FsReveal56">namespace FSharp</div>
+<div class="tip" id="FsReveal57">namespace FSharp.Charting</div>
+<div class="tip" id="FsReveal58">type Chart =<br />&#160;&#160;static member Area : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member Area : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member Bar : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member Bar : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; GenericChart<br />&#160;&#160;static member BoxPlotFromData : data:seq&lt;#key * #seq&lt;&#39;a2&gt;&gt; * ?Name:string * ?Title:string * ?Color:Color * ?XTitle:string * ?YTitle:string * ?Percentile:int * ?ShowAverage:bool * ?ShowMedian:bool * ?ShowUnusualValues:bool * ?WhiskerPercentile:int -&gt; GenericChart (requires &#39;a2 :&gt; value)<br />&#160;&#160;static member BoxPlotFromStatistics : data:seq&lt;#key * #value * #value * #value * #value * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string * ?Percentile:int * ?ShowAverage:bool * ?ShowMedian:bool * ?ShowUnusualValues:bool * ?WhiskerPercentile:int -&gt; GenericChart<br />&#160;&#160;static member Bubble : data:seq&lt;#value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string * ?BubbleMaxSize:int * ?BubbleMinSize:int * ?BubbleScaleMax:float * ?BubbleScaleMin:float * ?UseSizeForLabel:bool -&gt; GenericChart<br />&#160;&#160;static member Bubble : data:seq&lt;#key * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string * ?BubbleMaxSize:int * ?BubbleMinSize:int * ?BubbleScaleMax:float * ?BubbleScaleMin:float * ?UseSizeForLabel:bool -&gt; GenericChart<br />&#160;&#160;static member Candlestick : data:seq&lt;#value * #value * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; CandlestickChart<br />&#160;&#160;static member Candlestick : data:seq&lt;#key * #value * #value * #value * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:Color * ?XTitle:string * ?YTitle:string -&gt; CandlestickChart<br />&#160;&#160;...<br /><br />Full name: FSharp.Charting.Chart</div>
+<div class="tip" id="FsReveal59">static member Chart.Point : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string * ?MarkerColor:System.Drawing.Color * ?MarkerSize:int -&gt; ChartTypes.GenericChart<br />static member Chart.Point : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string * ?MarkerColor:System.Drawing.Color * ?MarkerSize:int -&gt; ChartTypes.GenericChart</div>
+<div class="tip" id="FsReveal60">val zip : source1:seq&lt;&#39;T1&gt; -&gt; source2:seq&lt;&#39;T2&gt; -&gt; seq&lt;&#39;T1 * &#39;T2&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.zip</div>
+<div class="tip" id="FsReveal61">val data : int list<br /><br />Full name: Document.data</div>
+<div class="tip" id="FsReveal62">val groupBy : projection:(&#39;T -&gt; &#39;Key) -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;Key * seq&lt;&#39;T&gt;&gt; (requires equality)<br /><br />Full name: Microsoft.FSharp.Collections.Seq.groupBy</div>
+<div class="tip" id="FsReveal63">val id : x:&#39;T -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.Operators.id</div>
+<div class="tip" id="FsReveal64">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;U&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.map</div>
+<div class="tip" id="FsReveal65">val l : int</div>
+<div class="tip" id="FsReveal66">val v : seq&lt;int&gt;</div>
+<div class="tip" id="FsReveal67">System.Int32.ToString() : string<br />System.Int32.ToString(provider: System.IFormatProvider) : string<br />System.Int32.ToString(format: string) : string<br />System.Int32.ToString(format: string, provider: System.IFormatProvider) : string</div>
+<div class="tip" id="FsReveal68">val length : source:seq&lt;&#39;T&gt; -&gt; int<br /><br />Full name: Microsoft.FSharp.Collections.Seq.length</div>
+<div class="tip" id="FsReveal69">val sortBy : projection:(&#39;T -&gt; &#39;Key) -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt; (requires comparison)<br /><br />Full name: Microsoft.FSharp.Collections.Seq.sortBy</div>
+<div class="tip" id="FsReveal70">static member Chart.Column : data:Series&lt;&#39;K,#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string -&gt; ChartTypes.GenericChart (requires equality and &#39;K :&gt; key)<br />static member Chart.Column : data:seq&lt;#value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string -&gt; ChartTypes.GenericChart<br />static member Chart.Column : data:seq&lt;#key * #value&gt; * ?Name:string * ?Title:string * ?Labels:#seq&lt;string&gt; * ?Color:System.Drawing.Color * ?XTitle:string * ?YTitle:string -&gt; ChartTypes.GenericChart</div>
 
         <!-- Any section element inside of this container is displayed as a slide -->
         <div class="slides">
@@ -111,11 +131,11 @@
 
 <h4>Karlkim Suwanmongkol</h4>
 
-<h4>@kimsk</h4>
+<h4><a href="http://twitter.com/kimsk">@kimsk</a></h4>
 
 <h4><a href="http://karlk.im">http://karlk.im</a></h4>
 
-<h4>to@karlk.im</h4>
+<h4><a href="mailto:to@karlk.im">to@karlk.im</a></h4>
 
 </section>
 
@@ -126,18 +146,15 @@
 <ul>
 <li><a href="http://lab.hakim.se/reveal-js/#/">Reveal.js</a> by <em>Hakim El Hattab</em></li>
 <li><a href="https://github.com/tpetricek/FSharp.Formatting">FSharp.Formatting</a> by <em>Tomas Petricek</em></li>
-<li>F#Reveal parse markdown and F# code to reveal.js presentation</li>
+<li>F#Reveal parses fsx file (markdown &amp; F# code) and generates reveal.js slides!</li>
 </ul>
 
-<hr />
-
-<h4>How about some F# code..</h4>
-
-<hr />
-
 <pre class="fssnip">
+<span class="c">// Say it in F#</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal1', 1)" onmouseover="showTip(event, 'FsReveal1', 1)" class="i">output</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'FsReveal2', 2)" onmouseover="showTip(event, 'FsReveal2', 2)" class="i">Markdown</span>, <span onmouseout="hideTip(event, 'FsReveal3', 3)" onmouseover="showTip(event, 'FsReveal3', 3)" class="i">``F# code``</span>) <span class="o">||&gt;</span> <span onmouseout="hideTip(event, 'FsReveal4', 4)" onmouseover="showTip(event, 'FsReveal4', 4)" class="i">FsReveal</span></pre>
 
+
+<p><strong>Try hovering the F# code with your mouse..</strong></p>
 
 </section>
 
@@ -148,7 +165,7 @@
 <ul>
 <li>F# Type inference</li>
 <li>Don't need to specify type (most of the time)</li>
-<li>Less verbose and <strong>Easy</strong> to write</li>
+<li>Less verbose and <strong>easy</strong> to write</li>
 <li>Can be <strong>hard</strong> to read without help from an IDE</li>
 </ul>
 
@@ -205,8 +222,6 @@
 
 <section>
 
-<section>
-
 <h3>Define some values</h3>
 
 <pre class="fssnip">
@@ -242,6 +257,111 @@
 </code></pre>
 
 </section>
+
+<section>
+
+<p><strong>We can include table (<code>deedle frame</code>)</strong></p>
+
+<pre class="fssnip">
+<span class="k">open</span> <span onmouseout="hideTip(event, 'FsReveal51', 84)" onmouseover="showTip(event, 'FsReveal51', 84)" class="i">Deedle</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal52', 85)" onmouseover="showTip(event, 'FsReveal52', 85)" class="i">df</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'FsReveal53', 86)" onmouseover="showTip(event, 'FsReveal53', 86)" class="i">Frame</span>([<span class="s">&quot;</span><span class="s">size</span><span class="s">&quot;</span>; <span class="s">&quot;</span><span class="s">price</span><span class="s">&quot;</span>],  [ <span onmouseout="hideTip(event, 'FsReveal54', 87)" onmouseover="showTip(event, 'FsReveal54', 87)" class="i">Series</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal55', 88)" onmouseover="showTip(event, 'FsReveal55', 88)" class="i">ofValues</span> <span onmouseout="hideTip(event, 'FsReveal42', 89)" onmouseover="showTip(event, 'FsReveal42', 89)" class="i">sizes</span>; <span onmouseout="hideTip(event, 'FsReveal54', 90)" onmouseover="showTip(event, 'FsReveal54', 90)" class="i">Series</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal55', 91)" onmouseover="showTip(event, 'FsReveal55', 91)" class="i">ofValues</span> <span onmouseout="hideTip(event, 'FsReveal43', 92)" onmouseover="showTip(event, 'FsReveal43', 92)" class="i">prices</span>])</pre>
+
+
+<div class="deedleframe">
+
+
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><p>size</p></th>
+<th><p>price</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>0</p></td>
+<td><p>1700</p></td>
+<td><p>53000</p></td>
+</tr>
+<tr class="even">
+<td><p>1</p></td>
+<td><p>2100</p></td>
+<td><p>44000</p></td>
+</tr>
+<tr class="odd">
+<td><p>2</p></td>
+<td><p>1900</p></td>
+<td><p>59000</p></td>
+</tr>
+<tr class="even">
+<td><p>3</p></td>
+<td><p>1300</p></td>
+<td><p>82000</p></td>
+</tr>
+<tr class="odd">
+<td><p>4</p></td>
+<td><p>1600</p></td>
+<td><p>50000</p></td>
+</tr>
+<tr class="even">
+<td><p>5</p></td>
+<td><p>2200</p></td>
+<td><p>68000</p></td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+
+
+</section>
+
+<section>
+
+<p><strong>Or a chart drawn by <code>FSharp.Charting</code></strong></p>
+
+<pre class="fssnip">
+<span class="k">open</span> <span onmouseout="hideTip(event, 'FsReveal56', 93)" onmouseover="showTip(event, 'FsReveal56', 93)" class="i">FSharp</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal57', 94)" onmouseover="showTip(event, 'FsReveal57', 94)" class="i">Charting</span> 
+<span onmouseout="hideTip(event, 'FsReveal58', 95)" onmouseover="showTip(event, 'FsReveal58', 95)" class="i">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal59', 96)" onmouseover="showTip(event, 'FsReveal59', 96)" class="i">Point</span>(<span onmouseout="hideTip(event, 'FsReveal33', 97)" onmouseover="showTip(event, 'FsReveal33', 97)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal60', 98)" onmouseover="showTip(event, 'FsReveal60', 98)" class="i">zip</span> <span onmouseout="hideTip(event, 'FsReveal42', 99)" onmouseover="showTip(event, 'FsReveal42', 99)" class="i">sizes</span> <span onmouseout="hideTip(event, 'FsReveal43', 100)" onmouseover="showTip(event, 'FsReveal43', 100)" class="i">prices</span>)</pre>
+
+
+<p><img src="./images/chart1.png" alt="" /></p>
+
+</section>
+
+<section>
+
+<p><em></em> More chart..</p>
+
+<pre class="fssnip">
+<span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal61', 101)" onmouseover="showTip(event, 'FsReveal61', 101)" class="i">data</span> <span class="o">=</span> [<span class="n">3</span>;<span class="n">4</span>;<span class="n">2</span>;<span class="n">4</span>;<span class="n">3</span>;<span class="n">5</span>;<span class="n">3</span>;<span class="n">6</span>;<span class="n">4</span>;<span class="n">3</span>]</pre>
+
+
+<pre class="fssnip">
+<span onmouseout="hideTip(event, 'FsReveal61', 102)" onmouseover="showTip(event, 'FsReveal61', 102)" class="i">data</span> 
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'FsReveal33', 103)" onmouseover="showTip(event, 'FsReveal33', 103)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal62', 104)" onmouseover="showTip(event, 'FsReveal62', 104)" class="i">groupBy</span> <span onmouseout="hideTip(event, 'FsReveal63', 105)" onmouseover="showTip(event, 'FsReveal63', 105)" class="i">id</span> 
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'FsReveal33', 106)" onmouseover="showTip(event, 'FsReveal33', 106)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal64', 107)" onmouseover="showTip(event, 'FsReveal64', 107)" class="i">map</span> (<span class="k">fun</span> (<span onmouseout="hideTip(event, 'FsReveal65', 108)" onmouseover="showTip(event, 'FsReveal65', 108)" class="i">l</span>,<span onmouseout="hideTip(event, 'FsReveal66', 109)" onmouseover="showTip(event, 'FsReveal66', 109)" class="i">v</span>) <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'FsReveal65', 110)" onmouseover="showTip(event, 'FsReveal65', 110)" class="i">l</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal67', 111)" onmouseover="showTip(event, 'FsReveal67', 111)" class="i">ToString</span>(),(<span onmouseout="hideTip(event, 'FsReveal33', 112)" onmouseover="showTip(event, 'FsReveal33', 112)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal68', 113)" onmouseover="showTip(event, 'FsReveal68', 113)" class="i">length</span> <span onmouseout="hideTip(event, 'FsReveal66', 114)" onmouseover="showTip(event, 'FsReveal66', 114)" class="i">v</span>))
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'FsReveal33', 115)" onmouseover="showTip(event, 'FsReveal33', 115)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal69', 116)" onmouseover="showTip(event, 'FsReveal69', 116)" class="i">sortBy</span> <span onmouseout="hideTip(event, 'FsReveal36', 117)" onmouseover="showTip(event, 'FsReveal36', 117)" class="i">fst</span>
+<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'FsReveal58', 118)" onmouseover="showTip(event, 'FsReveal58', 118)" class="i">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal70', 119)" onmouseover="showTip(event, 'FsReveal70', 119)" class="i">Column</span></pre>
+
+
+<p><img src="./images/chart2.png" alt="" /></p>
+
+</section>
+
+<section>
+
+<p><strong>Bayes' Rule in LaTeX</strong></p>
+
+<p><span class="math">\(\Pr(A|B)=\frac{\Pr(B|A)\Pr(A)}{\Pr(B|A)\Pr(A)+\Pr(B|\neg A)\Pr(\neg A)}\)</span></p>
+
+</section>
+
+<section>
+
+<h2>More to come..</h2>
 
 </section>
 
