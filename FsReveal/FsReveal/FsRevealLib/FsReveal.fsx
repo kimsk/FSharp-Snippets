@@ -32,7 +32,6 @@ let FsReveal markdown fsharp =
 #### How about some F# code..
 ***
 *)
-
 let output = (Markdown, ``F# code``) ||> FsReveal
 (*** slide-end ***)
 (*** slide-start ***)
@@ -80,5 +79,33 @@ let pickHighRanks player suit =
 (** 
 Need to think like a compiler to understand the code above..
 *)
+(*** slide-end ***)
+(*** slide-end ***)
+(*** slide-start ***)
+(*** slide-start ***)
+(** 
+### Define some values
+*)
+[<Measure>] type sqft
+[<Measure>] type dollar
+let sizes = [|1700<sqft>;2100<sqft>;1900<sqft>;1300<sqft>;1600<sqft>;2200<sqft>|]
+let prices = [|53000<dollar>;44000<dollar>;59000<dollar>;82000<dollar>;50000<dollar>;68000<dollar>|] 
+(*** slide-end ***)
+(*** slide-start ***)
+(** 
+### F# code is evaluated
+  
+  
+#### `sizes.[0]`
+*)
+(*** include-value: sizes.[0] ***)
+(*** slide-end ***)
+(*** slide-start ***)
+(**
+### Calculate price/sqft
+*)
+let getPricePerSqft size price = (float price)/(float size)
+let ``price per sqft`` = (sizes,prices) ||> Array.map2 getPricePerSqft
+(*** include-value: ``price per sqft`` ***)
 (*** slide-end ***)
 (*** slide-end ***)

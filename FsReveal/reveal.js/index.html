@@ -86,6 +86,18 @@
 <div class="tip" id="FsReveal36">val fst : tuple:(&#39;T1 * &#39;T2) -&gt; &#39;T1<br /><br />Full name: Microsoft.FSharp.Core.Operators.fst</div>
 <div class="tip" id="FsReveal37">val s : Suit</div>
 <div class="tip" id="FsReveal38">val r : Rank</div>
+<div class="tip" id="FsReveal39">Multiple items<br />type MeasureAttribute =<br />&#160;&#160;inherit Attribute<br />&#160;&#160;new : unit -&gt; MeasureAttribute<br /><br />Full name: Microsoft.FSharp.Core.MeasureAttribute<br /><br />--------------------<br />new : unit -&gt; MeasureAttribute</div>
+<div class="tip" id="FsReveal40">[&lt;Measure&gt;]<br />type sqft<br /><br />Full name: Document.sqft</div>
+<div class="tip" id="FsReveal41">[&lt;Measure&gt;]<br />type dollar<br /><br />Full name: Document.dollar</div>
+<div class="tip" id="FsReveal42">val sizes : int&lt;sqft&gt; []<br /><br />Full name: Document.sizes</div>
+<div class="tip" id="FsReveal43">val prices : int&lt;dollar&gt; []<br /><br />Full name: Document.prices</div>
+<div class="tip" id="FsReveal44">val getPricePerSqft : size:int&lt;sqft&gt; -&gt; price:int&lt;dollar&gt; -&gt; float<br /><br />Full name: Document.getPricePerSqft</div>
+<div class="tip" id="FsReveal45">val size : int&lt;sqft&gt;</div>
+<div class="tip" id="FsReveal46">val price : int&lt;dollar&gt;</div>
+<div class="tip" id="FsReveal47">Multiple items<br />val float : value:&#39;T -&gt; float (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.float<br /><br />--------------------<br />type float = System.Double<br /><br />Full name: Microsoft.FSharp.Core.float<br /><br />--------------------<br />type float&lt;&#39;Measure&gt; = float<br /><br />Full name: Microsoft.FSharp.Core.float&lt;_&gt;</div>
+<div class="tip" id="FsReveal48">val ( price per sqft ) : float []<br /><br />Full name: Document.( price per sqft )</div>
+<div class="tip" id="FsReveal49">module Array<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="FsReveal50">val map2 : mapping:(&#39;T1 -&gt; &#39;T2 -&gt; &#39;U) -&gt; array1:&#39;T1 [] -&gt; array2:&#39;T2 [] -&gt; &#39;U []<br /><br />Full name: Microsoft.FSharp.Collections.Array.map2</div>
 
         <!-- Any section element inside of this container is displayed as a slide -->
         <div class="slides">
@@ -186,6 +198,48 @@
 
 
 <p>Need to think like a compiler to understand the code above..</p>
+
+</section>
+
+</section>
+
+<section>
+
+<section>
+
+<h3>Define some values</h3>
+
+<pre class="fssnip">
+[&lt;<span onmouseout="hideTip(event, 'FsReveal39', 53)" onmouseover="showTip(event, 'FsReveal39', 53)" class="i">Measure</span>&gt;] <span class="k">type</span> <span onmouseout="hideTip(event, 'FsReveal40', 54)" onmouseover="showTip(event, 'FsReveal40', 54)" class="i">sqft</span>
+[&lt;<span onmouseout="hideTip(event, 'FsReveal39', 55)" onmouseover="showTip(event, 'FsReveal39', 55)" class="i">Measure</span>&gt;] <span class="k">type</span> <span onmouseout="hideTip(event, 'FsReveal41', 56)" onmouseover="showTip(event, 'FsReveal41', 56)" class="i">dollar</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal42', 57)" onmouseover="showTip(event, 'FsReveal42', 57)" class="i">sizes</span> <span class="o">=</span> [|<span class="n">1700</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal40', 58)" onmouseover="showTip(event, 'FsReveal40', 58)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">2100</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal40', 59)" onmouseover="showTip(event, 'FsReveal40', 59)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">1900</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal40', 60)" onmouseover="showTip(event, 'FsReveal40', 60)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">1300</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal40', 61)" onmouseover="showTip(event, 'FsReveal40', 61)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">1600</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal40', 62)" onmouseover="showTip(event, 'FsReveal40', 62)" class="i">sqft</span><span class="o">&gt;</span>;<span class="n">2200</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal40', 63)" onmouseover="showTip(event, 'FsReveal40', 63)" class="i">sqft</span>&gt;|]
+<span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal43', 64)" onmouseover="showTip(event, 'FsReveal43', 64)" class="i">prices</span> <span class="o">=</span> [|<span class="n">53000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal41', 65)" onmouseover="showTip(event, 'FsReveal41', 65)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">44000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal41', 66)" onmouseover="showTip(event, 'FsReveal41', 66)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">59000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal41', 67)" onmouseover="showTip(event, 'FsReveal41', 67)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">82000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal41', 68)" onmouseover="showTip(event, 'FsReveal41', 68)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">50000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal41', 69)" onmouseover="showTip(event, 'FsReveal41', 69)" class="i">dollar</span><span class="o">&gt;</span>;<span class="n">68000</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'FsReveal41', 70)" onmouseover="showTip(event, 'FsReveal41', 70)" class="i">dollar</span>&gt;|] </pre>
+
+
+</section>
+
+<section>
+
+<h3>F# code is evaluated</h3>
+
+<h4><code>sizes.[0]</code></h4>
+
+<pre><code>1700
+</code></pre>
+
+</section>
+
+<section>
+
+<h3>Calculate price/sqft</h3>
+
+<pre class="fssnip">
+<span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal44', 71)" onmouseover="showTip(event, 'FsReveal44', 71)" class="i">getPricePerSqft</span> <span onmouseout="hideTip(event, 'FsReveal45', 72)" onmouseover="showTip(event, 'FsReveal45', 72)" class="i">size</span> <span onmouseout="hideTip(event, 'FsReveal46', 73)" onmouseover="showTip(event, 'FsReveal46', 73)" class="i">price</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'FsReveal47', 74)" onmouseover="showTip(event, 'FsReveal47', 74)" class="i">float</span> <span onmouseout="hideTip(event, 'FsReveal46', 75)" onmouseover="showTip(event, 'FsReveal46', 75)" class="i">price</span>)<span class="o">/</span>(<span onmouseout="hideTip(event, 'FsReveal47', 76)" onmouseover="showTip(event, 'FsReveal47', 76)" class="i">float</span> <span onmouseout="hideTip(event, 'FsReveal45', 77)" onmouseover="showTip(event, 'FsReveal45', 77)" class="i">size</span>)
+<span class="k">let</span> <span onmouseout="hideTip(event, 'FsReveal48', 78)" onmouseover="showTip(event, 'FsReveal48', 78)" class="i">``price per sqft``</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'FsReveal42', 79)" onmouseover="showTip(event, 'FsReveal42', 79)" class="i">sizes</span>,<span onmouseout="hideTip(event, 'FsReveal43', 80)" onmouseover="showTip(event, 'FsReveal43', 80)" class="i">prices</span>) <span class="o">||&gt;</span> <span onmouseout="hideTip(event, 'FsReveal49', 81)" onmouseover="showTip(event, 'FsReveal49', 81)" class="i">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'FsReveal50', 82)" onmouseover="showTip(event, 'FsReveal50', 82)" class="i">map2</span> <span onmouseout="hideTip(event, 'FsReveal44', 83)" onmouseover="showTip(event, 'FsReveal44', 83)" class="i">getPricePerSqft</span></pre>
+
+
+<pre><code>[|31.17647059; 20.95238095; 31.05263158; 63.07692308; 31.25; 30.90909091|]
+</code></pre>
 
 </section>
 
