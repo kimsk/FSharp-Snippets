@@ -105,7 +105,9 @@ type FsReveal() =
   static member ProcessScriptFile outDir fsx =
     let configs, fsx = processConfigs fsx
 
-    let slides,tooltips =FsReveal.GetHtmlWithoutFormattedTips(fsx, "FsReveal", false)
+    let fsi = Formatters.createFsiEvaluator  "." outDir
+
+    let slides,tooltips =FsReveal.GetHtmlWithoutFormattedTips(fsx, fsi, "FsReveal", false)
     let relative subdir = Path.Combine(__SOURCE_DIRECTORY__, subdir)
     let output = StringBuilder(File.ReadAllText (relative "template.html"))
     
@@ -122,8 +124,7 @@ type FsReveal() =
 
     File.WriteAllText (Path.Combine(outDir, "index.html"), output.ToString())
 
-  static member GetHtmlWithoutFormattedTips(fsx, ?prefix, ?lineNumbers) =
-    let fsi = FsiEvaluator()    
+  static member GetHtmlWithoutFormattedTips(fsx, fsi, ?prefix, ?lineNumbers) =    
     let doc = Literate.ParseScriptString(fsx, fsiEvaluator = fsi)
 
     let ctx = formattingContext None (Some OutputKind.Html) prefix lineNumbers None None None
