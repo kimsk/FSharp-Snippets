@@ -12,10 +12,10 @@ open FSharp.Literate
 open FSharp.Markdown
 open FSharp.Markdown.Html
 
-let fsxLocation = @"C:\Users\Karlkim\Documents\GitHub\FsReveal\presentations\FsReveal.fsx"
+let fsxLocation = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.fsx")
 let fsx = File.ReadAllText (fsxLocation)
 
-let mdLocation = @"C:\Users\Karlkim\Documents\GitHub\FsReveal\presentations\FsReveal.md"
+let mdLocation = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.md")
 let md = File.ReadAllText (mdLocation)
 let presentation = FsReveal.getPresentationFromMarkdown md
 
