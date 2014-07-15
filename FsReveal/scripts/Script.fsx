@@ -1,29 +1,44 @@
-﻿#I @"..\..\..\FsReveal\src\FsReveal\bin"
+﻿#I @"..\..\..\FsReveal\src\packages\FSharp.Formatting.2.4.14\lib\net40"
 
 #r "FSharp.Literate.dll"
 #r "FSharp.Markdown.dll"
+#r "FSharp.CodeFormat.dll"
+#r @"..\..\..\FsReveal\src\FsReveal\bin\FsReveal.dll"
 
-#load @"..\..\..\FsReveal\src\FsReveal\FsReveal.fs"
-
+open System
 open System.IO
-open FsReveal
+open System.Collections.Generic
 open FSharp.Literate
 open FSharp.Markdown
+open FSharp.Markdown.Html
 
-[1;2;3;0;1;2;3] |> splitBy 0
-
-let fsxLocation = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.fsx")
+let fsxLocation = @"C:\Users\Karlkim\Documents\GitHub\FsReveal\presentations\FsReveal.fsx"
 let fsx = File.ReadAllText (fsxLocation)
-getPresentationFromScriptString fsx
 
-let mdLocation = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.md")
+let mdLocation = @"C:\Users\Karlkim\Documents\GitHub\FsReveal\presentations\FsReveal.md"
 let md = File.ReadAllText (mdLocation)
-let presentation = getPresentationFromMarkdown md
+let presentation = FsReveal.getPresentationFromMarkdown md
 
 
 // should be true
-getPresentationFromMarkdown md = getPresentationFromScriptString fsx
+FsReveal.getPresentationFromMarkdown md = FsReveal.getPresentationFromScriptString fsx
+
+presentation.Properties
+
+let sb = new System.Text.StringBuilder()
+let wr = new StringWriter(sb)
 
 
+let ctx = 
+  {
+    Writer = wr
+    Links = Dictionary<_, _>()
+    Newline = Environment.NewLine
+    LineBreak = ignore
+    ParagraphIndent = ignore
+  }
 
+let paragraphs = match presentation.Slides.Head with FsReveal.Simple(p) -> p | _ -> failwith "FAIL"
 
+formatParagraphs ctx paragraphs
+wr.ToString()
