@@ -17,28 +17,10 @@ let fsx = File.ReadAllText (fsxLocation)
 
 let mdLocation = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.md")
 let md = File.ReadAllText (mdLocation)
-let presentation = FsReveal.getPresentationFromMarkdown md
+let doc, presentation = FsReveal.getPresentationFromMarkdown md
 
 
 // should be true
 FsReveal.getPresentationFromMarkdown md = FsReveal.getPresentationFromScriptString fsx
 
-presentation.Properties
-
-let sb = new System.Text.StringBuilder()
-let wr = new StringWriter(sb)
-
-
-let ctx = 
-  {
-    Writer = wr
-    Links = Dictionary<_, _>()
-    Newline = Environment.NewLine
-    LineBreak = ignore
-    ParagraphIndent = ignore
-  }
-
-let paragraphs = match presentation.Slides.Head with FsReveal.Simple(p) -> p | _ -> failwith "FAIL"
-
-formatParagraphs ctx paragraphs
-wr.ToString()
+FsReveal.getSections presentation.Slides
