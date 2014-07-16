@@ -24,3 +24,6 @@ let doc, presentation = FsReveal.getPresentationFromMarkdown md
 FsReveal.getPresentationFromMarkdown md = FsReveal.getPresentationFromScriptString fsx
 
 FsReveal.getSections presentation.Slides
+
+snd(FsReveal.getPresentationFromScriptString fsx).Slides
+|> FsReveal.getSections
