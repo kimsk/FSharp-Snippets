@@ -17,13 +17,74 @@ let fsx = File.ReadAllText (fsxLocation)
 
 let mdLocation = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.md")
 let md = File.ReadAllText (mdLocation)
-let doc, presentation = FsReveal.getPresentationFromMarkdown md
+
+
+//let doc, presentation = FsReveal.getPresentationFromMarkdown md
+let doc, presentation = FsReveal.getPresentationFromScriptString fsx
+
+let sb = new System.Text.StringBuilder()
+let wr = new StringWriter(sb)
+
+let ctx = 
+  {
+    Writer = wr
+    Links = Dictionary<_, _>()
+    Newline = Environment.NewLine
+    LineBreak = ignore
+    ParagraphIndent = ignore
+  }
+
+let paragraphs = FsReveal.getParagraphsFromPresentation presentation
+
+formatParagraphs ctx paragraphs
+wr.ToString()
+
+
+
+
+#region temp
 
 
 // should be true
 FsReveal.getPresentationFromMarkdown md = FsReveal.getPresentationFromScriptString fsx
 
-FsReveal.getSections presentation.Slides
 
-snd(FsReveal.getPresentationFromScriptString fsx).Slides
-|> FsReveal.getSections
+let ps = 
+  [Heading (3,[Literal "What is FsReveal?"]);
+        ListBlock
+          (Unordered,
+           [[Span
+               [Literal "Generates ";
+                DirectLink
+                  ([Literal "reveal.js"],
+                   ("http://lab.hakim.se/reveal-js/#/", None));
+                Literal " presentation from ";
+                DirectLink
+                  ([Literal "markdown"],
+                   ("http://daringfireball.net/projects/markdown/", None))]];
+            [Span
+               [Literal "Utilizes ";
+                DirectLink
+                  ([Literal "FSharp.Formatting"],
+                   ("https://github.com/tpetricek/FSharp.Formatting", None));
+                Literal " for markdown parsing"]]])];
+
+let getParagraphsFromPresentation (presentation:FsReveal.Presentation) =
+  let slides = presentation.Slides
+
+  let wrapInSection p = InlineBlock("<section>")::p@[InlineBlock("</section>")]
+
+  let getParagraphsFromSlide = function
+    | FsReveal.Simple(p) ->
+        wrapInSection p        
+    | FsReveal.Nested(l) -> 
+        l 
+        |> List.map (wrapInSection)
+        |> List.collect id
+        |> wrapInSection
+                
+        
+  slides 
+  |> List.collect (getParagraphsFromSlide)
+
+#endregion
