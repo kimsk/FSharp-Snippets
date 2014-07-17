@@ -37,8 +37,11 @@
 <body>
     <div class="reveal">
         <div class="tip" id="fs1">val a : int<br /><br />Full name: Document.a</div>
-<div class="tip" id="fs2">val b : int<br /><br />Full name: Document.b</div>
-<div class="tip" id="fs3">val c : int<br /><br />Full name: Document.c</div>
+<div class="tip" id="fs2">val factorial : x:int -&gt; int<br /><br />Full name: Document.factorial</div>
+<div class="tip" id="fs3">val x : int</div>
+<div class="tip" id="fs4">Multiple items<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;member Head : &#39;T<br />&#160;&#160;member IsEmpty : bool<br />&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;member Length : int<br />&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;static member Cons : head:&#39;T * tail:&#39;T list -&gt; &#39;T list<br />&#160;&#160;static member Empty : &#39;T list<br /><br />Full name: Microsoft.FSharp.Collections.List&lt;_&gt;</div>
+<div class="tip" id="fs5">val reduce : reduction:(&#39;T -&gt; &#39;T -&gt; &#39;T) -&gt; list:&#39;T list -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Collections.List.reduce</div>
+<div class="tip" id="fs6">val c : int<br /><br />Full name: Document.c</div>
 
         <!-- Any section element inside of this container is displayed as a slide -->
         <div class="slides">
@@ -84,9 +87,9 @@
 
 <section>
 
-<h1>Slide-1</h1>
+<h3>Syntax Highlighting</h3>
 
-<h2>test</h2>
+<h4>F# (with tooltips)</h4>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l">1: </span>
@@ -95,9 +98,9 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">a</span> <span class="o">=</span> <span class="n">10</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">b</span> <span class="o">=</span> <span class="n">20</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">c</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">a</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="i">b</span></pre>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">a</span> <span class="o">=</span> <span class="n">5</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">factorial</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">x</span> <span class="o">=</span> [<span class="n">1..</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">x</span>] <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="i">List</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">reduce</span> <span class="o">(*)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="i">c</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 8)" onmouseover="showTip(event, 'fs2', 8)" class="i">factorial</span> <span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="i">a</span></pre>
 </td>
 </tr>
 </table>
@@ -106,25 +109,50 @@
 
 <section>
 
-<h1>Sub-Slide-1</h1>
+<h4>C#</h4>
 
-<h2>test</h2>
+<table class="pre"><tr><td><pre lang="cs"><span class="k">using</span> System;
 
-</section>
-
-<section>
-
-<h1>Sub-Slide-2</h1>
-
-<h2>test</h2>
-
-</section>
+<span class="k">class</span> Program
+{
+    <span class="k">static</span> <span class="k">void</span> Main()
+    {
+        Console.WriteLine(<span class="s">"Hello, world!"</span>);
+    }
+}</pre></td></tr></table>
 
 </section>
 
 <section>
 
-<h1>Slide-2</h1>
+<h4>JavaScript</h4>
+
+<table class="pre"><tr><td><pre lang="js"><span class="k">function</span> copyWithEvaluation(iElem, elem) {
+    <span class="k">return</span> <span class="k">function</span> (obj) {
+        <span class="k">var</span> newObj = {};
+        <span class="k">for</span> (<span class="k">var</span> p <span class="k">in</span> obj) {
+            <span class="k">var</span> v = obj[p];
+            <span class="k">if</span> (<span class="k">typeof</span> v === <span class="s">"function"</span>) {
+                v = v(iElem, elem);
+            }
+            newObj[p] = v;
+        }
+        <span class="k">if</span> (!newObj.exactTiming) {
+            newObj.delay += exports._libraryDelay;
+        }
+        <span class="k">return</span> newObj;
+    };
+}</pre></td></tr></table>
+
+</section>
+
+</section>
+
+<section>
+
+<p><strong>Bayes' Rule in LaTeX</strong></p>
+
+<p><span class="math">\(\Pr(A|B)=\frac{\Pr(B|A)\Pr(A)}{\Pr(B|A)\Pr(A)+\Pr(B|\neg A)\Pr(\neg A)}\)</span></p>
 
 </section>
 
@@ -144,7 +172,7 @@
             history: true,
             center: true,
 
-            theme: 'dark', // available themes are in /css/theme
+            theme: 'Night', // available themes are in /css/theme
             transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
 
             // Parallax scrolling
