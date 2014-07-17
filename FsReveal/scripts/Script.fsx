@@ -21,6 +21,6 @@ let md = File.ReadAllText (mdLocation)
 
 let outDir = Path.Combine(__SOURCE_DIRECTORY__, "../reveal.js")
 
-fsx |> FsReveal.processScriptFile outDir "test2.html"
-md |> FsReveal.processMarkdownFile outDir "test3.html"
+fsx |> FsReveal.processScriptFile outDir "test-fsx.html"
+md |> FsReveal.processMarkdownFile outDir "test-md.html"
 
