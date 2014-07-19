@@ -1,5 +1,4 @@
-﻿#I @"..\..\..\FsReveal\src\packages\FSharp.Formatting.2.4.18\lib\net40"
-
+﻿#I @"..\..\..\FSharp.Formatting\bin"
 #r "FSharp.Literate.dll"
 #r "FSharp.Markdown.dll"
 #r "FSharp.CodeFormat.dll"
@@ -20,6 +19,10 @@ let md = File.ReadAllText (mdLocation)
 
 let outDir = Path.Combine(__SOURCE_DIRECTORY__, "../reveal.js")
 
-fsx |> FsReveal.processScriptFile outDir "test-fsx.html"
-md |> FsReveal.processMarkdownFile outDir "test-md.html"
+fsx 
+|> FsReveal.getPresentationFromScriptString
+|> FsReveal.generateOutput outDir "test-fsx.html"
 
+md
+|> FsReveal.getPresentationFromMarkdown
+|> FsReveal.generateOutput outDir "test-md.html"
