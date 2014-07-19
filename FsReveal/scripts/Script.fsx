@@ -1,4 +1,4 @@
-﻿#I @"..\..\..\FSharp.Formatting\bin"
+﻿#I @"..\..\..\FsReveal\src\packages\FSharp.Formatting.2.4.18\lib\net40"
 #r "FSharp.Literate.dll"
 #r "FSharp.Markdown.dll"
 #r "FSharp.CodeFormat.dll"
