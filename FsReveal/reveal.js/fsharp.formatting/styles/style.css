@@ -53,8 +53,7 @@ table.pre, pre.fssnip, pre {
   border:1px solid #d8d8d8;
   border-collapse:separate;
   white-space:pre;
-  /*font: 9pt 'Droid Sans Mono',consolas,monospace;*/
-  font-size: x-large;
+  font: 22px 'Droid Sans Mono',consolas,monospace;
   width:90%;
   margin:10px 20px 20px 20px;
   background-color:#212d30;
@@ -67,6 +66,7 @@ table.pre pre {
   margin:0px;
   border-radius:0px;
   width: 100%;
+  font: 22px 'Droid Sans Mono',consolas,monospace;
 }
 table.pre td {
   padding:0px;
@@ -75,6 +75,11 @@ table.pre td {
 }
 table.pre td.lines {
   width:30px;
+}
+
+table.pre code {
+    font-size: 20px;
+    background-color:#212d30;
 }
 
 /*-------------------------------------------------------------------------- 
