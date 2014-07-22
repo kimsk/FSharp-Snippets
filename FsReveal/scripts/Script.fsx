@@ -11,7 +11,7 @@ open FSharp.Literate
 open FSharp.Markdown
 open FSharp.Markdown.Html
 
-let outDir = Path.Combine(__SOURCE_DIRECTORY__, "../reveal.js")
+let outDir = @"g:\output"
 
 let fsxFile = Path.Combine(__SOURCE_DIRECTORY__, @"..\..\..\FsReveal\presentations\FsReveal.fsx")
 FsReveal.generateOutputFromScriptFile outDir "test-fsx.html" fsxFile
