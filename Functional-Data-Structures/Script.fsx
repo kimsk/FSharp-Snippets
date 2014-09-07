@@ -101,3 +101,27 @@ let isPrime n =
 Seq.initInfinite (fun _ -> rnd.Next(1, 1000))
 |> Seq.take 10
 |> Seq.map (isPrime)
+
+
+["abc";"cef";"jk";"cef";"ab"]
+|> Seq.distinct
+
+["abc";"cef";"jk";"cef";"ab"]
+|> Seq.distinctBy (fun s -> s.Length)
+
+["abc";"cef";"jk";"cef";"ab"]
+|> Seq.countBy id
+
+{1..10}
+|> Seq.pairwise
+
+let result:seq<int*int> = [] |> Seq.pairwise
+{1..2} |> Seq.windowed 3
+
+// Seq.collect
+
+let oneToThree i = [i;i+1;i+2]
+
+[1;2;3;4;5]
+|> Seq.collect (oneToThree)
+|> Array.ofSeq
