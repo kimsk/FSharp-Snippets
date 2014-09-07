@@ -53,9 +53,6 @@ DaysFollowing (DateTime(2015,2,1)) |> Seq.take 5
 "abcd".[0]
 
 let rec seqWithRecursion (i:int64) =
-    seq {
-            yield i
-            yield! (seqWithRecursion (i*i))
-        }
+    seq { yield i;yield! (seqWithRecursion (i*i))}
 
-seqWithRecursion 2L |> Seq.take 6 |> Array.ofSeq 
+seqWithRecursion 2L |> Seq.truncate 6 |> Seq.length 
