@@ -125,3 +125,10 @@ let oneToThree i = [i;i+1;i+2]
 [1;2;3;4;5]
 |> Seq.collect (oneToThree)
 |> Array.ofSeq
+
+
+
+let f s = [for ch in "ACGT" -> string << Seq.length <| Seq.filter ((=) ch) s] |> String.concat " "; 
+f "AGCTTTTCATTCTGACTGCAACGGG"
+
+
