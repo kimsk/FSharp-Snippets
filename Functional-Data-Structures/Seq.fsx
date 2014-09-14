@@ -1,39 +1,18 @@
-﻿let b:int[] = Array.zeroCreate 20
+﻿let withYield =
+  seq { 
+    for i in 1..10 do yield seq { i..i+9 }
+  }
 
-5
-|> function
-   | 1 -> Some(1)
-   | _ -> None
+let withYieldBang =
+  seq { 
+    for i in 1..10 do yield! seq { i..i+9 }
+  }
 
+let withCollect = {1..10} |> Seq.collect (fun i -> [i..i+9])
 
-5 
-|> fun i ->
-        match i with
-        | 1 -> Some(1)
-        | 5 -> Some(5)
-        | _ -> None
+List.ofSeq withYieldBang = List.ofSeq withCollect
 
-(fun i ->
-        match i with
-        | 1 -> Some(1)
-        | 5 -> Some(5)
-        | _ -> None) 5
-
-
-[1;2;3;4]
-|> List.reduce (fun acc v -> acc + v)
-
-// https://twitter.com/fsibot/status/508465436346691584
-[|for s in "♣♦♥♠" do 
-    for r in "A23456789TJQK" -> 
-        System.String[|r;s|]|] 
-    |> Array.sortBy (fun _ -> System.Random().NextDouble())
-
-<<<<<<< HEAD
-=======
-
-Array.choose
-
+{1..20} |> Seq.choose (fun i -> if i%2=0 then Some(i) else None)
 
 // generate sequence
 let s1 = seq {1..1000}
@@ -127,11 +106,3 @@ let oneToThree i = [i;i+1;i+2]
 [1;2;3;4;5]
 |> Seq.collect (oneToThree)
 |> Array.ofSeq
-
-
-
-let f s = [for ch in "ACGT" -> string << Seq.length <| Seq.filter ((=) ch) s] |> String.concat " "; 
-f "AGCTTTTCATTCTGACTGCAACGGG"
-
-
->>>>>>> origin/master
