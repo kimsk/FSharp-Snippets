@@ -6,7 +6,7 @@ dict1.["A"] <- "10"
 
 
 // immutable style
-let dict' = [ "A",1;"B",2;"C",3;"C",4] |> dict // undocumented, 
+let dict' = [ "A",1;"B",2;"C",3;"C",4] |> dict // undocumented, immutable, good performance
 
 dict'.["A"] // <- 10
 dict'.Add("D",4) // NotSupportedException
