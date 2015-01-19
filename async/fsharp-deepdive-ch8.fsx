@@ -38,3 +38,9 @@ let downloadAgent =
 
     loop Map.empty
   )
+
+let result = doWebRequest "http://www.google.com" "GET" readStreamAsString
+let task = result |> Async.StartAsTask
+task.Result
+
+let agentResult = downloadAgent.PostAndReply(fun reply -> Get("http://www.google.com", reply))
