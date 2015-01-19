@@ -69,6 +69,10 @@ let fetchAsync''(nm, url:string) =
 
 for nm, url in links do
   fetchAsync (nm, url) |> Async.Start
+  
+fetchAsync("tachyus", "http://www.tachyus.com") |> Async.Start 
+fetchAsync("tachyus", "http://www.tachyus.com") |> Async.RunSynchronously 
+
 
 links 
 |> List.toArray 
@@ -82,9 +86,16 @@ printfn "hello"
 |> Async.Ignore
 |> Async.RunSynchronously
 
-[for nm, url in links -> fetchAsync(nm, url)]
-|> Async.Parallel
-|> Async.RunSynchronously
+
+printfn "[.NET thread %d]" System.Threading.Thread.CurrentThread.ManagedThreadId
+let list = 
+  [for nm, url in links do 
+    printfn "[.NET thread %d]" System.Threading.Thread.CurrentThread.ManagedThreadId
+    yield fetchAsync''(nm, url)]
+  |> Async.Parallel
+  |> Async.RunSynchronously
+  |> String.concat "\r\n"
+printfn "[.NET thread %d]" System.Threading.Thread.CurrentThread.ManagedThreadId
 
 open System.Threading
 ThreadPool.QueueUserWorkItem(fun _ -> printf "Hello") |> ignore
