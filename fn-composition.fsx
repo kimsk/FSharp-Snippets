@@ -11,3 +11,9 @@ let sqr_negate_print = sqr >> negate >> print
 |> print
 
 10 |> sqr_negate_print
+
+let a() = printfn "A"
+let b() = printfn "B"
+let c() = printfn "C"
+
+let abc = a >> b >> c
